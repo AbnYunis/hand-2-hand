@@ -16,7 +16,7 @@ class ClipPart extends StatelessWidget {
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            color: Color(0xffC5EDF8),
+            color: const Color(0xffC5EDF8),
           ),
         ),
         ClipPath(
@@ -24,7 +24,7 @@ class ClipPart extends StatelessWidget {
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            color:Color(0xffA9D5FC),
+            color:const Color(0xffA9D5FC),
           ),
         ),
 

@@ -20,6 +20,7 @@ class SearchTextField extends StatelessWidget {
         ),
         suffixIcon: IconButton(
           icon: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 height: h * .03,

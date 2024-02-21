@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hand2hand/core/utils/app_router.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
+import 'package:hand2hand/features/home/views/widgets/favourite_widget.dart';
 
-import 'category_item.dart';
 import 'custom_texts_widget.dart';
-import 'favourite_categories_row.dart';
 import 'recommended_widget.dart';
 import 'search_text_field.dart';
 
@@ -20,23 +21,38 @@ class HomeViewBody extends StatelessWidget {
       children: [
         /// The texts hello
         const CustomTextsWidget(),
+
         /// search text field
+        TextButton(
+            onPressed: () {
+              GoRouter.of(context).push(AppRouter.exploreCharities);
+            },
+            child: Row(
+              children: [
+                const Text(
+                  'See all charities',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBoxApp(
+                  w: .05,
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_outlined,
+                  size: w * .05,
+                  color: Colors.black,
+                ),
+              ],
+            )),
         const SearchTextField(),
         SizedBox(height: h * .015),
-        /// Favourite text
-        const FavouriteCategoriesRow(),
-        SizedBox(height: h * .01),
+
         /// The favourite list
-        SizedBox(
-          height: h * .15,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 6,
-            itemBuilder: (context, index) {
-              return MyListItem(index + 1); // Add 1 to start index from 1
-            },
-          ),
-        ),
+        const DonateWidget(),
+        SizedBox(height: h * .015),
+
         /// Recommendation text
         Padding(
           padding: EdgeInsets.only(left: w * .05),
@@ -45,6 +61,7 @@ class HomeViewBody extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: w * .04),
           ),
         ),
+
         /// The recommendation list items
         SizedBox(
           height: 360,
@@ -52,7 +69,8 @@ class HomeViewBody extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: 4,
             itemBuilder: (context, index) {
-              return RecommendedWidget(index + 1); // Add 1 to start index from 1
+              return RecommendedWidget(
+                  index + 1); // Add 1 to start index from 1
             },
           ),
         ),

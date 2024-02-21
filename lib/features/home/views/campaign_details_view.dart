@@ -9,7 +9,6 @@ class CampaignDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final w = SizeApp(context).width;
-    final h = SizeApp(context).height;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

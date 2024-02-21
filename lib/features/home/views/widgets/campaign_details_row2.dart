@@ -8,7 +8,6 @@ class CampaignDetailsRow2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final w = SizeApp(context).width;
-    final h = SizeApp(context).height;
     return Row(
       children: [
         CircleAvatar(

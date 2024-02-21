@@ -66,9 +66,7 @@ class VerifyBody extends StatelessWidget {
                 onChanged: (x) {},
                 textFieldAlignment: MainAxisAlignment.spaceAround,
                 fieldStyle: FieldStyle.box,
-                onCompleted: (pin) {
-                  print("Completed: " + pin);
-                },
+                onCompleted: (pin) {},
               ),
               Expanded(
                 child: SingleChildScrollView(

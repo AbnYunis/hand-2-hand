@@ -39,7 +39,7 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
         textButton: 'Next',
         onPressed: () {
           _pageController.animateToPage(2,
-              duration: Duration(milliseconds: 250), curve: Curves.easeIn);
+              duration: const Duration(milliseconds: 250), curve: Curves.easeIn);
         },
       ),
       OnBoardingCustomWidget(

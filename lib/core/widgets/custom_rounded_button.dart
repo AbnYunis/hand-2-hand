@@ -7,11 +7,13 @@ class CustomRoundedButton extends StatelessWidget {
     required this.text,
     this.width,
     required this.onPressed,
+    this.height,
   }) : super(key: key);
 
   final String text;
   final Function() onPressed;
   final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class CustomRoundedButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        height: (size.height * 0.0603).floorToDouble(),
+        height: height ?? (size.height * 0.0603).floorToDouble(),
         width: width ?? (size.width * .65).floorToDouble(),
         decoration: BoxDecoration(
           color: mainColor1,
@@ -28,7 +30,10 @@ class CustomRoundedButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: size.width * .04,
+                fontWeight: FontWeight.bold),
           ),
         ),
       ),
