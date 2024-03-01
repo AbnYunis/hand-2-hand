@@ -18,24 +18,20 @@ class CustomRoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        height: height ?? (size.height * 0.0603).floorToDouble(),
-        width: width ?? (size.width * .65).floorToDouble(),
-        decoration: BoxDecoration(
-          color: mainColor1,
-          borderRadius: BorderRadius.all(Radius.circular(size.width * 0.1)),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: size.width * .04,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
+    return MaterialButton(
+      onPressed: onPressed ?? () {},
+      color: mainColor1,
+      minWidth: size.width * 0.75,
+      height: size.height * 0.06,
+      shape: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(size.width * 0.1)),
+      child: Text(
+        text,
+        style: TextStyle(
+            fontWeight: FontWeight.w800,
+            fontSize: size.width * 0.035,
+            color: scaffoldColor),
       ),
     );
   }
