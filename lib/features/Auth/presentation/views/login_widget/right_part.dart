@@ -14,7 +14,7 @@ class RightPart extends StatelessWidget {
       alignment: AlignmentDirectional.centerEnd,
       child: TextButton(
         onPressed: () {
-          GoRouter.of(context).push(AppRouter.forgetPass);
+          GoRouter.of(context).push(AppRouter.forgetPass,extra: false);
         },
         child: Text(
           'Forget password?',

@@ -1,18 +1,25 @@
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hand2hand/constants.dart';
 import 'package:hand2hand/core/utils/functions/load_image.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
+import 'package:hand2hand/core/utils/shared_data.dart';
 
-class PhotoWidget extends StatelessWidget {
+class PhotoWidget extends StatefulWidget {
   const PhotoWidget({
     super.key,
   });
 
   @override
+  State<PhotoWidget> createState() => _PhotoWidgetState();
+}
+
+class _PhotoWidgetState extends State<PhotoWidget> {
+  File? imageFile;
+  @override
   Widget build(BuildContext context) {
-    File? imageFile;
+
     return Stack(
       alignment: AlignmentDirectional.bottomEnd,
       children: [
@@ -30,7 +37,9 @@ class PhotoWidget extends StatelessWidget {
               ),
               CircleAvatar(
                 radius: SizeApp(context).width * 0.15,
-                backgroundImage: const NetworkImage(
+                backgroundImage: imageFile != null
+                    ? FileImage(imageFile!) as ImageProvider
+                    : const NetworkImage(
                     'https://www.footballdatabase.eu/images/photos/players/a_8/8471.jpg'),
               )
             ],
@@ -42,7 +51,10 @@ class PhotoWidget extends StatelessWidget {
           child: IconButton(
               onPressed: () {
                 chooseImage(context, imageFile)
-                    .then((value) => imageFile = value);
+                    .then((value) {setState(() {
+                  imageFile = value;
+                  _saveImageToPrefs(imageFile);
+                    });});
               },
               icon: Icon(
                 Icons.camera_enhance_sharp,
@@ -51,5 +63,10 @@ class PhotoWidget extends StatelessWidget {
         )
       ],
     );
+  }
+  Future<void> _saveImageToPrefs(File? imageFile) async {
+    final bytes = await imageFile!.readAsBytes();
+    final String encodedImage = base64Encode(bytes);
+    SharedData.saveUserImage(userImage: encodedImage);
   }
 }

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hand2hand/constants.dart';
-import 'package:hand2hand/core/utils/app_router.dart';
 import 'package:hand2hand/core/widgets/clip_path.dart';
 import 'package:hand2hand/core/widgets/custom_app_bar.dart';
-import 'package:hand2hand/core/widgets/custom_auth_text_field.dart';
-import 'package:hand2hand/core/widgets/custom_rectangle_button.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 
+import 'forget_form.dart';
+
 class ForgetPassBody extends StatelessWidget {
-  const ForgetPassBody({super.key});
+  const ForgetPassBody({super.key, required this.isRegister});
+  final bool isRegister;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class ForgetPassBody extends StatelessWidget {
               Align(
                 alignment: AlignmentDirectional.centerStart,
                 child: Text(
-                  'Forgot Password',
+                  isRegister?'Verify Email':'Forgot Password',
                   style: TextStyle(
                     fontSize: SizeApp(context).width * 0.045,
                     fontWeight: FontWeight.w800,
@@ -49,25 +48,7 @@ class ForgetPassBody extends StatelessWidget {
                 height: SizeApp(context).height * 0.0004,
                 color: mainColor2,
               ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBoxApp(h: 0.06),
-                      const CustomAuthTextField(
-                          text: 'Email ID/Phone number',
-                          icon: Icons.alternate_email_outlined),
-                      const SizedBoxApp(h: 0.025),
-                      CustomRectangleButton(
-                        text: 'Submit',
-                        press: () {
-                          GoRouter.of(context).push(AppRouter.verify);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              ForgetForm(isRegister: isRegister),
             ],
           ),
         )
@@ -75,3 +56,4 @@ class ForgetPassBody extends StatelessWidget {
     );
   }
 }
+

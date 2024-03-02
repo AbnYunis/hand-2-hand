@@ -3,10 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hand2hand/core/utils/app_router.dart';
 
 import 'core/utils/functions/material_color.dart';
+import 'core/utils/service_locator.dart';
+import 'core/utils/shared_data.dart';
 
-void main(){
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedData.init();
+  ServiceLocator().init();
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

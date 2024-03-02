@@ -53,11 +53,11 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: forgetPass,
-        builder: (context, state) => const ForgetPassView(),
+        builder: (context, state) =>  ForgetPassView(isRegister: state.extra as bool),
       ),
       GoRoute(
         path: verify,
-        builder: (context, state) => const VerifyView(),
+        builder: (context, state) =>  VerifyView(parameters: state.extra as Map<String, dynamic>,),
       ),
       GoRoute(
         path: createAs,

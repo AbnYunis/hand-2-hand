@@ -7,11 +7,13 @@ class CustomAuthTextField extends StatelessWidget {
   const CustomAuthTextField({
     super.key,
     required this.text,
-    this.icon,
+    this.icon, this.validate, this.controller,
   });
 
   final String text;
   final IconData? icon;
+  final String? Function(String?)? validate;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class CustomAuthTextField extends StatelessWidget {
         filled: true,
         prefixIcon: icon != null ? Icon(icon, color: iconsColor) : null,
       ),
+      validator: validate,controller: controller,
     );
   }
 }
