@@ -4,13 +4,25 @@ import 'package:hand2hand/core/utils/media_query.dart';
 class CustomTextField extends StatelessWidget {
   final String hint;
   final IconData icon;
+  final String? Function(String?)? validate;
+  final TextEditingController? controller;
+  final bool readOnly;
 
-  const CustomTextField({super.key, required this.hint, required this.icon});
+  const CustomTextField({
+    super.key,
+    required this.hint,
+    required this.icon,
+    this.validate,
+    this.controller,
+    required this.readOnly,
+  });
 
   @override
   Widget build(BuildContext context) {
     final w = SizeApp(context).width;
-    return TextField(
+    return TextFormField(
+      readOnly: readOnly,
+      validator: validate,
       cursorColor: const Color(0xff3093A8),
       decoration: InputDecoration(
         prefixIcon: Icon(
@@ -33,6 +45,7 @@ class CustomTextField extends StatelessWidget {
               color: Color(0xff3093A8)), // Change the color here
         ),
       ),
+      controller: controller,
     );
   }
 }

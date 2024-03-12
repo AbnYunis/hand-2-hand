@@ -5,6 +5,7 @@ import 'package:hand2hand/constants.dart';
 import 'package:hand2hand/core/utils/app_router.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 import 'package:hand2hand/core/utils/service_locator.dart';
+import 'package:hand2hand/core/utils/shared_data.dart';
 import 'package:hand2hand/core/widgets/custom_auth_text_field.dart';
 import 'package:hand2hand/core/widgets/custom_rectangle_button.dart';
 import 'package:hand2hand/core/widgets/custom_snack_bar.dart';
@@ -23,10 +24,20 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
     TextEditingController passController = TextEditingController();
-    GlobalKey<FormState> formKey=GlobalKey();
-    return BlocConsumer<AuthCubit,AuthState>(
+    GlobalKey<FormState> formKey = GlobalKey();
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
+          SharedData.saveToken(token: state.registerModel.token!);
+          SharedData.saveUserEmail(userEmail: state.registerModel.user.email);
+          SharedData.saveUserId(userId: state.registerModel.user.userId);
+          SharedData.saveUserName(userName: state.registerModel.user.userName);
+          SharedData.saveUserPhone(userPhone: state.registerModel.user.phone);
+          SharedData.saveIsLogin(isLogin: state.registerModel.user.isLoggedIn);
+          SharedData.saveUserImage(
+              userImage:
+                  state.registerModel.user.secureUrl!);
+
           GoRouter.of(context).go(AppRouter.home);
           snackBar(state.registerModel.message, context, Colors.white);
           AuthCubit(sl<AuthRepoImplementation>()).close();
@@ -35,10 +46,10 @@ class LoginForm extends StatelessWidget {
           snackBar(state.errMessage, context, Colors.red);
         }
       },
-      builder:(context, state) {
+      builder: (context, state) {
         return Padding(
           padding:
-          EdgeInsets.symmetric(horizontal: SizeApp(context).width * 0.05),
+              EdgeInsets.symmetric(horizontal: SizeApp(context).width * 0.05),
           child: SingleChildScrollView(
             child: Form(
               key: formKey,
@@ -60,7 +71,7 @@ class LoginForm extends StatelessWidget {
                   ),
                   CustomAuthTextField(
                     text: 'Email address/phone number',
-                    validate:(p0) {
+                    validate: (p0) {
                       if (p0!.isEmpty) {
                         return "please enter your email";
                       }
@@ -73,7 +84,7 @@ class LoginForm extends StatelessWidget {
                   ),
                   CustomAuthTextField(
                     text: 'password',
-                    validate:(p0) {
+                    validate: (p0) {
                       if (p0!.isEmpty) {
                         return "please enter your email";
                       }
@@ -88,15 +99,18 @@ class LoginForm extends StatelessWidget {
                   const SizedBoxApp(
                     h: 0.048,
                   ),
-                  state is AuthLoading?const Center(
-                    child: CircularProgressIndicator(),
-                  ):CustomRectangleButton(
-                    text: 'Log in',
-                    press: () {
-                      BlocProvider.of<AuthCubit>(context)
-                          .login(email: emailController.text, password: passController.text);
-                    },
-                  ),
+                  state is AuthLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : CustomRectangleButton(
+                          text: 'Log in',
+                          press: () {
+                            BlocProvider.of<AuthCubit>(context).login(
+                                email: emailController.text,
+                                password: passController.text);
+                          },
+                        ),
                   const SizedBoxApp(
                     h: 0.02,
                   ),

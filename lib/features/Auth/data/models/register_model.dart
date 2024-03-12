@@ -12,13 +12,13 @@ class AuthModel {
   factory AuthModel.fromJson(Map<String, dynamic> json) => AuthModel(
         message: json["message"],
         user: User.fromJson(json["user"]),
-        token: json["token"]??'12345',
+        token: json["token"] ?? '12345',
       );
 
   Map<String, dynamic> toJson() => {
         "message": message,
         "user": user.toJson(),
-        "token": token??'12345',
+        "token": token ?? '12345',
       };
 }
 
@@ -37,23 +37,24 @@ class User {
   int v;
   String? otp;
   String userId;
+  String? secureUrl;
 
-  User({
-    required this.userName,
-    required this.email,
-    required this.password,
-    required this.phone,
-    required this.isLoggedIn,
-    required this.isConfirmEmail,
-    required this.role,
-    required this.status,
-    required this.id,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.v,
-    this.otp,
-    required this.userId,
-  });
+  User(
+      {required this.userName,
+      required this.email,
+      required this.password,
+      required this.phone,
+      required this.isLoggedIn,
+      required this.isConfirmEmail,
+      required this.role,
+      required this.status,
+      required this.id,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.v,
+      this.otp,
+      required this.userId,
+      this.secureUrl});
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         userName: json["userName"],
@@ -68,8 +69,10 @@ class User {
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         v: json["__v"],
-        otp: json["OTP"]??'12345',
+        otp: json["OTP"] ?? '12345',
         userId: json["id"],
+        secureUrl: json['profile_pic']['secure_url'] ??
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh1MxDvWeEQ39D04ETGLuJ_pnSkd_gZf47R7qkQaxbHotxVs-aBvYjsHmbvxcKhTGn9gI&usqp=CAU',
       );
 
   Map<String, dynamic> toJson() => {
@@ -85,7 +88,7 @@ class User {
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "__v": v,
-        "OTP": otp??'123456',
+        "OTP": otp ?? '123456',
         "id": userId,
       };
 }

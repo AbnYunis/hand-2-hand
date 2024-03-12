@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hand2hand/constants.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
+import 'package:hand2hand/core/utils/shared_data.dart';
 
 import '../../../../../core/utils/app_router.dart';
 import 'slidinganimationtext.dart';
@@ -13,9 +14,11 @@ class SplashBody extends StatefulWidget {
   State<SplashBody> createState() => _SplashBodyState();
 }
 
-class _SplashBodyState extends State<SplashBody>with SingleTickerProviderStateMixin  {
+class _SplashBodyState extends State<SplashBody>
+    with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<Offset> slidingAnimation;
+
   @override
   void initState() {
     super.initState();
@@ -23,12 +26,12 @@ class _SplashBodyState extends State<SplashBody>with SingleTickerProviderStateMi
     navigateToHome();
   }
 
-
   @override
   void dispose() {
     super.dispose();
     animationController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -46,21 +49,36 @@ class _SplashBodyState extends State<SplashBody>with SingleTickerProviderStateMi
             height: SizeApp(context).height * 0.25,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: SizeApp(context).width * .2),
-            child:SlideAnimatedText(slidingAnimation: slidingAnimation)
-          ),
+              padding:
+                  EdgeInsets.symmetric(horizontal: SizeApp(context).width * .2),
+              child: SlideAnimatedText(slidingAnimation: slidingAnimation)),
         ],
       ),
     );
   }
+
   void initSlidingAnimation() {
-    animationController=AnimationController(vsync: this,duration:const Duration(milliseconds: 1500));
-    slidingAnimation=Tween<Offset>(begin:const Offset(0,3) ,end:Offset.zero ).animate(animationController);
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1500));
+    slidingAnimation =
+        Tween<Offset>(begin: const Offset(0, 3), end: Offset.zero)
+            .animate(animationController);
     animationController.forward();
   }
+
   void navigateToHome() {
     Future.delayed(const Duration(seconds: 3), () async {
-      GoRouter.of(context).go(AppRouter.onBoarding);
+      if (SharedData.getIsLogin() != true) {
+        GoRouter.of(context).go(AppRouter.onBoarding);
+      } else {
+        if (SharedData.getToken() == null) {
+          GoRouter.of(context).go(
+            AppRouter.login,
+          );
+        } else {
+          GoRouter.of(context).go(AppRouter.home);
+        }
+      }
     });
   }
 }

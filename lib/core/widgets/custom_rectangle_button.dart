@@ -5,17 +5,25 @@ import '../utils/media_query.dart';
 
 class CustomRectangleButton extends StatelessWidget {
   const CustomRectangleButton({
-    super.key, required this.text, this.press,
+    super.key,
+    required this.text,
+    this.press,
+    this.width,
+    this.height,
   });
+
   final String text;
+  final double? width;
+  final double? height;
   final void Function()? press;
+
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: press??() {},
+      onPressed: press ?? () {},
       color: mainColor1,
-      minWidth: SizeApp(context).width * 0.75,
-      height: SizeApp(context).height * 0.06,
+      minWidth: width ?? SizeApp(context).width * 0.75,
+      height: height ?? SizeApp(context).height * 0.06,
       shape: OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(SizeApp(context).width * 0.015)),

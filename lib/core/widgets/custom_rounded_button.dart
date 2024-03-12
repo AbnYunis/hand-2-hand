@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hand2hand/constants.dart';
+import 'package:hand2hand/core/utils/media_query.dart';
 
 class CustomRoundedButton extends StatelessWidget {
   const CustomRoundedButton({
@@ -21,8 +22,8 @@ class CustomRoundedButton extends StatelessWidget {
     return MaterialButton(
       onPressed: onPressed ?? () {},
       color: mainColor1,
-      minWidth: size.width * 0.75,
-      height: size.height * 0.06,
+      minWidth: width ?? SizeApp(context).width * 0.75,
+      height: height ?? SizeApp(context).height * 0.06,
       shape: OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(size.width * 0.1)),

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hand2hand/core/utils/app_router.dart';
 import 'package:hand2hand/core/utils/functions/assets_service.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
+import 'package:hand2hand/core/utils/shared_data.dart';
 
 
 import 'widgets/home_view_body.dart';
@@ -42,7 +43,7 @@ class HomeView extends StatelessWidget {
                   onTap: ()=> GoRouter.of(context).push(AppRouter.profile),
                   child: CircleAvatar(
                     radius: w * .05,
-                    backgroundImage: const AssetImage(AssetsService.onBoard1),
+                    backgroundImage:  NetworkImage(SharedData.getUserImage()!),
                   ),
                 ),
                 SizedBox(

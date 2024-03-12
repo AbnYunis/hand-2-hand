@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:hand2hand/core/utils/shared_data.dart';
 
 class ApiService {
   final baseUrl = 'https://charities-donations.onrender.com/';
@@ -29,12 +30,21 @@ class ApiService {
     return response.data;
   }
 
-  // Future<Map<String, dynamic>> putData(
-  //     {required String endPoint, required Object? data}) async {
-  //   dio.options.headers = {
-  //     'token': SharedData.getToken(),
-  //   };
-  //   final response = await dio.put('$baseUrl$endPoint', data: data);
-  //   return response.data;
-  // }
+  Future<Map<String, dynamic>> putData(
+      {required String endPoint, required Object? data}) async {
+    dio.options.headers = {
+      'token': SharedData.getToken(),
+    };
+    final response = await dio.put('$baseUrl$endPoint', data: data);
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> patchData(
+      {required String endPoint, required Object? data}) async {
+    dio.options.headers = {
+      'token': SharedData.getToken(),
+    };
+    final response = await dio.patch('$baseUrl$endPoint', data: data);
+    return response.data;
+  }
 }

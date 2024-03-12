@@ -35,12 +35,8 @@ class SharedData {
     await prefs?.setString('userEmail', userEmail);
   }
 
-  static void saveUserAge({required int age}) async {
-    await prefs?.setInt('userAge', age);
-  }
-
-  static void saveFirst({required bool first}) async {
-    await prefs?.setBool('first', first);
+  static void saveIsLogin({required bool isLogin}) async {
+    await prefs?.setBool('isLogin', isLogin);
   }
 
   static String? getToken() {
@@ -75,8 +71,8 @@ class SharedData {
     return prefs?.getInt('userAge');
   }
 
-  static bool? getFirst() {
-    return prefs?.getBool('first');
+  static bool? getIsLogin() {
+    return prefs?.getBool('isLogin');
   }
 
   static Future<bool>? removeData(String key) {

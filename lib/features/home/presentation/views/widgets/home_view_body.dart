@@ -64,7 +64,7 @@ class HomeViewBody extends StatelessWidget {
 
         /// The recommendation list items
         SizedBox(
-          height: 360,
+          height: 400,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: 4,
