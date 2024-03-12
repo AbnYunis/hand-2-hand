@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 
-
+final TextEditingController countController=TextEditingController();
 class ItemCountWidget extends StatelessWidget {
   const ItemCountWidget({super.key});
 
@@ -24,6 +24,8 @@ class ItemCountWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(w * .02),
             ),
           ),
+          controller: countController,
+          keyboardType: TextInputType.number,
         ),
       ],
     );

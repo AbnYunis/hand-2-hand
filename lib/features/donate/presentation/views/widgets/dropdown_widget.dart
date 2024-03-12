@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 
+String selectedItem = 'food';
 
 class DropDownWidget extends StatefulWidget {
   const DropDownWidget({super.key});
@@ -11,13 +12,11 @@ class DropDownWidget extends StatefulWidget {
 
 class _DropDownWidgetState extends State<DropDownWidget> {
   final List<String> items = [
-    '1',
-    '2',
-    '3',
-    '4',
+    'food',
+    'clothes',
+    'money',
+    'other',
   ];
-
-  String selectedItem = '1';
 
   @override
   Widget build(BuildContext context) {

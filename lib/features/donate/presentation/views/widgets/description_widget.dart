@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
-
+final TextEditingController descController=TextEditingController();
 class DescriptionWidget extends StatelessWidget {
   const DescriptionWidget({super.key});
 
@@ -26,6 +26,7 @@ class DescriptionWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(w * .02),
             ),
           ),
+          controller: descController,
         ),
       ],
     );

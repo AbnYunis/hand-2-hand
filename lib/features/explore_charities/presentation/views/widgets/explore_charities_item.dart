@@ -3,27 +3,20 @@ import 'package:go_router/go_router.dart';
 import 'package:hand2hand/core/utils/app_router.dart';
 import 'package:hand2hand/core/utils/functions/assets_service.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
-
+import 'package:hand2hand/features/explore_charities/data/models/Charities.dart';
 
 class ActivitiesGridViewItem extends StatelessWidget {
-  const ActivitiesGridViewItem({super.key, required this.index});
+  const ActivitiesGridViewItem({super.key, required this.charity});
 
-  final int index;
+  final Charity charity;
 
   @override
   Widget build(BuildContext context) {
-    List<String> clicks = [
-      AppRouter.donate,
-      AppRouter.donate,
-      AppRouter.donate,
-      AppRouter.donate,
-      AppRouter.donate,
-      AppRouter.donate,
-    ];
     final h = SizeApp(context).height;
     final w = SizeApp(context).width;
     return GestureDetector(
-      onTap: () => context.push(clicks[index]),
+      onTap: () => GoRouter.of(context).push(AppRouter.donate,
+          extra: {'charityName': charity.charityName, 'charityId': charity.id}),
       child: Container(
         width: w * .03,
         height: h * .01,
@@ -40,7 +33,7 @@ class ActivitiesGridViewItem extends StatelessWidget {
             )
           ],
         ),
-        child: Image.asset(AssetsService.charities[index]),
+        child: Image.network(charity.profilePic),
       ),
     );
   }

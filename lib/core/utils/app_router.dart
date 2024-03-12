@@ -53,11 +53,14 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: forgetPass,
-        builder: (context, state) =>  ForgetPassView(isRegister: state.extra as bool),
+        builder: (context, state) =>
+            ForgetPassView(isRegister: state.extra as bool),
       ),
       GoRoute(
         path: verify,
-        builder: (context, state) =>  VerifyView(parameters: state.extra as Map<String, dynamic>,),
+        builder: (context, state) => VerifyView(
+          parameters: state.extra as Map<String, dynamic>,
+        ),
       ),
       GoRoute(
         path: createAs,
@@ -81,7 +84,8 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: donate,
-        builder: (context, state) => const DonateView(),
+        builder: (context, state) =>
+            DonateView(data: state.extra as Map<String, dynamic>),
       ),
       GoRoute(
         path: congratulation,
