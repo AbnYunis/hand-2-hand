@@ -35,8 +35,7 @@ class LoginForm extends StatelessWidget {
           SharedData.saveUserPhone(userPhone: state.registerModel.user.phone);
           SharedData.saveIsLogin(isLogin: state.registerModel.user.isLoggedIn);
           SharedData.saveUserImage(
-              userImage:
-                  state.registerModel.user.secureUrl!);
+              userImage: state.registerModel.user.secureUrl!);
 
           GoRouter.of(context).go(AppRouter.home);
           snackBar(state.registerModel.message, context, Colors.white);
@@ -86,7 +85,7 @@ class LoginForm extends StatelessWidget {
                     text: 'password',
                     validate: (p0) {
                       if (p0!.isEmpty) {
-                        return "please enter your email";
+                        return "please enter your password";
                       }
                       return null;
                     },
@@ -106,9 +105,12 @@ class LoginForm extends StatelessWidget {
                       : CustomRectangleButton(
                           text: 'Log in',
                           press: () {
-                            BlocProvider.of<AuthCubit>(context).login(
-                                email: emailController.text,
-                                password: passController.text);
+                            if (formKey.currentState!.validate()) {
+                              FocusScope.of(context).unfocus();
+                              BlocProvider.of<AuthCubit>(context).login(
+                                  email: emailController.text,
+                                  password: passController.text);
+                            }
                           },
                         ),
                   const SizedBoxApp(

@@ -12,12 +12,20 @@ class EditProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocProvider(
-        create: (context) => UpdateProfileCubit(sl<EditProfileRepoImplement>()),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) =>
+                UpdateProfileCubit(sl<EditProfileRepoImplement>()),
+          ),
+          BlocProvider(
+            create: (context) => EditPhotoCubit(sl<EditProfileRepoImplement>()),
+          ),
+        ],
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: const Text('Profile'),
+            title: const Text('Edit profile'),
           ),
           body: const EditProfileBody(),
         ),

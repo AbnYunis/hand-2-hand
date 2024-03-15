@@ -64,6 +64,10 @@ class DonateBody extends StatelessWidget {
                 }
               },
               builder: (context, state) {
+                String locationController =
+                    BlocProvider.of<MakeDonationCubit>(context)
+                        .desController
+                        .text;
                 bool isImage =
                     BlocProvider.of<MakeDonationCubit>(context).isImage;
 
@@ -168,18 +172,23 @@ class DonateBody extends StatelessWidget {
                             child: CustomRoundedButton(
                             text: 'Donate',
                             onPressed: () {
-                              BlocProvider.of<MakeDonationCubit>(context)
-                                  .makeDonation({
-                                'image': imageFile!.path,
-                                'desc': descController.text,
-                                'location':
-                                    BlocProvider.of<MakeDonationCubit>(context)
-                                        .desController
-                                        .text,
-                                'id': id,
-                                'amount': countController.text,
-                                'donationType': selectedItem,
-                              });
+                              if (descController.text.isEmpty ||
+                                  locationController.isEmpty ||
+                                  countController.text.isEmpty ||
+                                  imageFile == null) {
+                                snackBar('Please enter all date!', context,
+                                    mainColor2);
+                              } else {
+                                BlocProvider.of<MakeDonationCubit>(context)
+                                    .makeDonation({
+                                  'image': imageFile!.path,
+                                  'desc': descController.text,
+                                  'location': locationController,
+                                  'id': id,
+                                  'amount': countController.text,
+                                  'donationType': selectedItem,
+                                });
+                              }
                             },
                           )),
                   ],

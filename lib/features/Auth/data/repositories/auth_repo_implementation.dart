@@ -43,12 +43,12 @@ class AuthRepoImplementation extends AuthRepo {
 
   @override
   Future<Either<Failures, AuthModel>> register(
-      String email,
-      String password,
-      String rePassword,
-      String phone,
-      String userName,
-      ) async {
+    String email,
+    String password,
+    String rePassword,
+    String phone,
+    String userName,
+  ) async {
     try {
       final Map<String, dynamic> data = {
         'email': email,
@@ -60,23 +60,19 @@ class AuthRepoImplementation extends AuthRepo {
 
       final res =
           await apiService.postData(endPoint: 'auth/signup', data: data);
-      print(1);
+
       if (res['message'] == 'success') {
         return right(AuthModel.fromJson(res));
       } else {
-        print(2);
         return left(
           ServerFailure(res['message']),
         );
       }
     } catch (e) {
-      print("1+${e.toString()}");
-
       if (e.toString().contains('409')) {
         return left(ServerFailure.fromResponse(
             0, 'user already exists or have the same phone number'));
       } else if (e is DioException) {
-        print(e.toString());
         return left(
           ServerFailure.fromDioError(e),
         );
@@ -144,36 +140,36 @@ class AuthRepoImplementation extends AuthRepo {
       );
     }
   }
-  //
-  // @override
-  // Future<Either<Failures, String>> resetPassword(
-  //     String password, Map<String, dynamic> _data) async {
-  //   try {
-  //     final Map<String, dynamic> data = {
-  //       'password': password,
-  //       'repassword': password,
-  //       'OTP': _data['otp']
-  //     };
-  //     final res = await apiService.postData(
-  //         endPoint: 'auth/forgetpassword/${_data['userId']}', data: data);
-  //     if (res['message'] == 'success') {
-  //       return right('success');
-  //     } else {
-  //       return left(
-  //         ServerFailure(res['message']),
-  //       );
-  //     }
-  //   } catch (e) {
-  //     if (e is DioException) {
-  //       return left(
-  //         ServerFailure.fromDioError(e),
-  //       );
-  //     }
-  //     return left(
-  //       ServerFailure(
-  //         e.toString(),
-  //       ),
-  //     );
-  //   }
-  // }
+//
+// @override
+// Future<Either<Failures, String>> resetPassword(
+//     String password, Map<String, dynamic> _data) async {
+//   try {
+//     final Map<String, dynamic> data = {
+//       'password': password,
+//       'repassword': password,
+//       'OTP': _data['otp']
+//     };
+//     final res = await apiService.postData(
+//         endPoint: 'auth/forgetpassword/${_data['userId']}', data: data);
+//     if (res['message'] == 'success') {
+//       return right('success');
+//     } else {
+//       return left(
+//         ServerFailure(res['message']),
+//       );
+//     }
+//   } catch (e) {
+//     if (e is DioException) {
+//       return left(
+//         ServerFailure.fromDioError(e),
+//       );
+//     }
+//     return left(
+//       ServerFailure(
+//         e.toString(),
+//       ),
+//     );
+//   }
+// }
 }

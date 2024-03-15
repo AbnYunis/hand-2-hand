@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hand2hand/core/utils/app_router.dart';
-import 'package:hand2hand/core/utils/functions/assets_service.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 import 'package:hand2hand/features/explore_charities/data/models/Charities.dart';
 

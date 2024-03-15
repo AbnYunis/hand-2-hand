@@ -24,7 +24,6 @@ class MakeDonationRepoImplement extends MakeDonationRepo {
         'charity': data['id'],
         'amount': data['amount']
       });
-      print(formData.fields);
       final res =
           await apiService.postData(endPoint: 'donations', data: formData);
 

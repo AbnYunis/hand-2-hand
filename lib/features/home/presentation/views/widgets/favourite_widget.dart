@@ -15,7 +15,7 @@ class DonateWidget extends StatelessWidget {
       padding: EdgeInsets.only(right: w * .2),
       child: InkWell(
         onTap: () {
-          GoRouter.of(context).push(AppRouter.donate);
+          GoRouter.of(context).push(AppRouter.exploreCharities);
         },
         child: Container(
           height: h * .06,

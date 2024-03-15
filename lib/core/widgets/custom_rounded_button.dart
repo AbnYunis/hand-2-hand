@@ -20,7 +20,7 @@ class CustomRoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return MaterialButton(
-      onPressed: onPressed ?? () {},
+      onPressed: onPressed,
       color: mainColor1,
       minWidth: width ?? SizeApp(context).width * 0.75,
       height: height ?? SizeApp(context).height * 0.06,

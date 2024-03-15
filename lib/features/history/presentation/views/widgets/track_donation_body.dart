@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 import 'package:hand2hand/features/history/presentation/views/widgets/custom_stepper_item.dart';
-import 'package:hand2hand/features/history/presentation/views/widgets/history_item.dart';
 
 class TrackDonationBody extends StatelessWidget {
   const TrackDonationBody({super.key});
@@ -18,8 +17,10 @@ class TrackDonationBody extends StatelessWidget {
           const SizedBoxApp(
             h: .03,
           ),
-          const HistoryItem(),
-          const SizedBoxApp(h: .05,),
+          // const HistoryItem(donationItem: ,),
+          const SizedBoxApp(
+            h: .05,
+          ),
           const CustomStepperItem(),
           Padding(
             padding: EdgeInsets.only(left: w * .04),

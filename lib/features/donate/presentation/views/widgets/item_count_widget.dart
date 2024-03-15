@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 
-final TextEditingController countController=TextEditingController();
+final TextEditingController countController = TextEditingController();
+
 class ItemCountWidget extends StatelessWidget {
   const ItemCountWidget({super.key});
 

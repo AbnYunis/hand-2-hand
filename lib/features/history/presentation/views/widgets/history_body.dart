@@ -1,5 +1,8 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
+import 'package:hand2hand/features/history/presentation/manegers/donation_history_cubit/donation_history_cubit.dart';
 import 'package:hand2hand/features/history/presentation/views/widgets/history_item.dart';
 
 class HistoryBody extends StatelessWidget {
@@ -8,7 +11,6 @@ class HistoryBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final w = SizeApp(context).width;
-    final h = SizeApp(context).height;
     return Padding(
       padding: EdgeInsets.all(w * .05),
       child: SingleChildScrollView(
@@ -19,14 +21,48 @@ class HistoryBody extends StatelessWidget {
               padding: EdgeInsets.only(left: w * .05),
               child: Text(
                 'Donation History',
-                style: TextStyle(fontSize: w * .05, fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(fontSize: w * .05, fontWeight: FontWeight.bold),
               ),
             ),
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: 5,
-              itemBuilder: (context, index) => const HistoryItem(),
+            BlocBuilder<DonationHistoryCubit, DonationHistoryState>(
+              builder: (context, state) {
+                if (state is DonationHistorySuccess) {
+                  final donations = state.donationHistoryModel.donations;
+                  return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: donations.length,
+                      itemBuilder: (context, index) {
+
+                        return HistoryItem(
+                          donationItem: donations[index],
+                        );
+                      });
+                } else if (state is DonationHistoryFailure) {
+                  return Column(
+                    children: [
+                      const SizedBoxApp(
+                        h: .3,
+                      ),
+                      Center(
+                        child: Text(state.message),
+                      ),
+                    ],
+                  );
+                } else {
+                  return const Column(
+                    children: [
+                      SizedBoxApp(
+                        h: .3,
+                      ),
+                      Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ],
+                  );
+                }
+              },
             ),
           ],
         ),

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand2hand/constants.dart';
-import 'package:hand2hand/core/utils/functions/assets_service.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 import 'package:hand2hand/core/utils/shared_data.dart';
 import 'package:hand2hand/core/widgets/custom_rectangle_button.dart';
 import 'package:hand2hand/core/widgets/custom_snack_bar.dart';
 import 'package:hand2hand/features/profile/presentation/manager/update_profile_cubit/update_profile_cubit.dart';
 import 'package:hand2hand/features/profile/presentation/views/widgets/custom_text_field.dart';
+import 'package:hand2hand/features/profile/presentation/views/widgets/edit_image_widget.dart';
 
 final TextEditingController editNameController = TextEditingController();
 final TextEditingController editPhoneController = TextEditingController();
@@ -25,107 +25,104 @@ class EditProfileBody extends StatelessWidget {
     editPasswordController.text = '***********';
     GlobalKey<FormState> formKey = GlobalKey();
     final w = SizeApp(context).width;
-    final h = SizeApp(context).height;
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(w * .05),
-        child: Column(
-          children: [
-            const SizedBoxApp(
-              h: .1,
-            ),
-            CircleAvatar(
-                radius: w * .12,
-                backgroundImage: NetworkImage(SharedData.getUserImage()!)),
-            const SizedBoxApp(
-              h: .05,
-            ),
-            Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  CustomTextField(
-                    validate: (val) {
-                      if (val!.isEmpty) {
-                        return 'You must write your name';
-                      } else {
-                        return null;
-                      }
-                    },
-                    readOnly: false,
-                    hint: 'name',
-                    icon: Icons.person,
-                    controller: editNameController,
-                  ),
-                  const SizedBoxApp(
-                    h: .035,
-                  ),
-                  CustomTextField(
-                    readOnly: true,
-                    hint: 'password',
-                    icon: Icons.lock,
-                    controller: editPasswordController,
-                  ),
-                  const SizedBoxApp(
-                    h: .035,
-                  ),
-                  CustomTextField(
-                    readOnly: true,
-                    hint: 'email',
-                    icon: Icons.email_outlined,
-                    controller: editEmailController,
-                  ),
-                  const SizedBoxApp(
-                    h: .035,
-                  ),
-                  CustomTextField(
-                    validate: (val) {
-                      if (val!.isEmpty) {
-                        return 'You must write your phone';
-                      } else {
-                        return null;
-                      }
-                    },
-                    readOnly: false,
-                    hint: 'phone',
-                    icon: Icons.phone,
-                    controller: editPhoneController,
-                  ),
-                ],
+    return SingleChildScrollView(
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.all(w * .05),
+          child: Column(
+            children: [
+              const SizedBoxApp(
+                h: .1,
               ),
-            ),
-            const SizedBoxApp(
-              h: .05,
-            ),
-            BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
-              listener: (context, state) {
-                if (state is UpdateProfileFailure) {
-                  snackBar(state.message, context, Colors.red);
-                } else if (state is UpdateProfileSuccess) {
-                  SharedData.saveUserName(
-                      userName:
-                          state.updateProfileModel.user!.userName);
-                  SharedData.saveUserPhone(
-                      userPhone:
-                          state.updateProfileModel.user!.phone);
-                  snackBar(
-                      state.updateProfileModel.message!, context, mainColor1);
-                }
-              },
-              builder: (context, state) {
-                if (state is UpdateProfileLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return CustomRectangleButton(
-                    text: 'Update',
-                    press: () => submit(context, formKey),
-                  );
-                }
-              },
-            )
-          ],
+              const EditImageWidget(),
+              const SizedBoxApp(
+                h: .05,
+              ),
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      validate: (val) {
+                        if (val!.isEmpty) {
+                          return 'You must write your name';
+                        } else {
+                          return null;
+                        }
+                      },
+                      readOnly: false,
+                      hint: 'name',
+                      icon: Icons.person,
+                      controller: editNameController,
+                    ),
+                    const SizedBoxApp(
+                      h: .035,
+                    ),
+                    CustomTextField(
+                      readOnly: true,
+                      hint: 'password',
+                      icon: Icons.lock,
+                      controller: editPasswordController,
+                    ),
+                    const SizedBoxApp(
+                      h: .035,
+                    ),
+                    CustomTextField(
+                      readOnly: true,
+                      hint: 'email',
+                      icon: Icons.email_outlined,
+                      controller: editEmailController,
+                    ),
+                    const SizedBoxApp(
+                      h: .035,
+                    ),
+                    CustomTextField(
+                      validate: (val) {
+                        if (val!.isEmpty) {
+                          return 'You must write your phone';
+                        } else {
+                          return null;
+                        }
+                      },
+                      readOnly: false,
+                      hint: 'phone',
+                      icon: Icons.phone,
+                      controller: editPhoneController,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBoxApp(
+                h: .05,
+              ),
+              BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
+                listener: (context, state) {
+                  if (state is UpdateProfileFailure) {
+                    snackBar(state.message, context, Colors.red);
+                  } else if (state is UpdateProfileSuccess) {
+                    SharedData.saveUserName(
+                        userName: state.updateProfileModel.user!.userName);
+                    SharedData.saveUserPhone(
+                        userPhone: state.updateProfileModel.user!.phone);
+                    snackBar(
+                        state.updateProfileModel.message!, context, mainColor1);
+                  }
+                },
+                builder: (context, state) {
+                  if (state is UpdateProfileLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return CustomRectangleButton(
+                      text: 'Update',
+                      press: () => submit(context, formKey),
+                    );
+                  }
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

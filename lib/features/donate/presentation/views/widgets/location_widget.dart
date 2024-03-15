@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand2hand/constants.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 import 'package:hand2hand/features/donate/presentation/manegers/make_donation_cubit.dart';
-import 'package:hand2hand/features/donate/presentation/manegers/make_donation_cubit.dart';
 
 class LocationWidget extends StatelessWidget {
   const LocationWidget({super.key});

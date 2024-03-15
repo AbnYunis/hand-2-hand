@@ -131,7 +131,7 @@ class VerifyBody extends StatelessWidget {
                           const SizedBoxApp(h: 0.09),
                           state is ConfirmEmailLoading?const Center(
                             child: CircularProgressIndicator(),
-                          ): CustomRectangleButton(text: 'Verify'),
+                          ): const CustomRectangleButton(text: 'Verify'),
                         ],
                       ),
                     ),
