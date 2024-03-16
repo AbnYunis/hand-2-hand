@@ -11,7 +11,8 @@ class RecommendedWidget extends StatelessWidget {
   final int itemNumber;
   final PostsModel postModel;
 
-  const RecommendedWidget(this.itemNumber, {super.key, required this.postModel});
+  const RecommendedWidget(this.itemNumber,
+      {super.key, required this.postModel});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,8 @@ class RecommendedWidget extends StatelessWidget {
     final h = SizeApp(context).height;
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(AppRouter.campaign,extra: postModel.posts[itemNumber].id);
+        GoRouter.of(context)
+            .push(AppRouter.campaign, extra: postModel.posts[itemNumber].id);
       },
       child: Container(
         width: w * .7,
@@ -35,18 +37,22 @@ class RecommendedWidget extends StatelessWidget {
                     topRight: Radius.circular(w * .04)),
               ),
               width: w * .7,
-              height: h * .4,
-            ),
-             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /// The first section in the recommendation widget
-                RecommendedFirstSection(image: postModel.posts[itemNumber].image.secureUrl,),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// The first section in the recommendation widget
+                  RecommendedFirstSection(
+                    image: postModel.posts[itemNumber].image.secureUrl,
+                  ),
 
-                /// The second section in the recommendation widget
+                  /// The second section in the recommendation widget
 
-                RecommendedSecondSection(posts: postModel,index: itemNumber,),
-              ],
+                  RecommendedSecondSection(
+                    posts: postModel,
+                    index: itemNumber,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

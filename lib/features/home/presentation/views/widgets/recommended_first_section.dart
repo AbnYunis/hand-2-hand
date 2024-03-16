@@ -12,7 +12,7 @@ class RecommendedFirstSection extends StatelessWidget {
     final h = SizeApp(context).height;
     return  Container(
       width: w * .7,
-      height: h * .23,
+      height: h * .2,
       decoration: BoxDecoration(
         color: Colors.grey.withOpacity(.2),
         borderRadius: BorderRadius.circular(w * .04),

@@ -35,4 +35,30 @@ class CharitiesRepoImplement extends CharitiesRepo {
       );
     }
   }
+
+  @override
+  Future<Either<Failures, Charities>> searchCharities(String key) async{
+    try {
+      final res = await apiService.getData(endPoint: 'charities/search?searchKey=$key');
+
+      if (res['message'] == 'success') {
+        return right(Charities.fromJson(res));
+      } else {
+        return left(
+          ServerFailure(res['message']),
+        );
+      }
+    } catch (e) {
+      if (e is DioException) {
+        return left(
+          ServerFailure.fromDioError(e),
+        );
+      }
+      return left(
+        ServerFailure(
+          e.toString(),
+        ),
+      );
+    }
+  }
 }

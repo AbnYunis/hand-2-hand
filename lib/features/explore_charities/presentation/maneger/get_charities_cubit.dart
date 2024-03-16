@@ -18,4 +18,13 @@ class GetCharitiesCubit extends Cubit<GetCharitiesState> {
       emit(GetCharitiesSuccess(charities));
     });
   }
+  Future<void> searchCharities(String key) async {
+    emit(GetSearchCharitiesLoading());
+    final res = await charitiesRepo.searchCharities(key);
+    res.fold((failure) {
+      emit(GetSearchCharitiesFailure(failure.errorMessage));
+    }, (charities) {
+      emit(GetSearchCharitiesSuccess(charities));
+    });
+  }
 }

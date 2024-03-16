@@ -37,7 +37,7 @@ class CongratulationBody extends StatelessWidget {
           CustomRoundedButton(
             text: 'Back to home',
             onPressed: () {
-              GoRouter.of(context).pushReplacement(AppRouter.home);
+              GoRouter.of(context).pushReplacement(AppRouter.home,);
 
             },
           ),

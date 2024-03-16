@@ -24,4 +24,14 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
       emit(FetchOnePostsSuccess(onePost));
     });
   }
+  Future<void> searchCharities(String key) async {
+    emit(GetSearchCharitiesLoading());
+    final res = await homeRepo.searchCharities(key);
+    res.fold((failure) {
+      emit(GetSearchCharitiesFailure(failure.errorMessage));
+    }, (charities) {
+      emit(GetSearchCharitiesSuccess(charities));
+    });
+  }
+
 }

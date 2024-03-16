@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hand2hand/constants.dart';
@@ -55,54 +57,58 @@ class HistoryItem extends StatelessWidget {
                         const SizedBoxApp(
                           w: .02,
                         ),
-                        Column(
-                          children: [
-                            const Text(
-                              'We care you',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              'Cate : ${donationItem.donationType}',
-                              style: const TextStyle(color: Color(0xffB2B2B4)),
-                            )
-                          ],
+                        Expanded(
+                          child: Column(
+                            children: [
+                              const Text(
+                                'We care you',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                'Cate : ${donationItem.donationType}',
+                                style: const TextStyle(color: Color(0xffB2B2B4)),
+                              )
+                            ],
+                          ),
                         ),
                         const SizedBoxApp(
                           w: .02,
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              '${donationItem.createdAt.day}-${donationItem.createdAt.month}-${donationItem.createdAt.year}',
-                              style: const TextStyle(color: Color(0xffB2B2B4)),
-                            ),
-                            Text(
-                              '${donationItem.createdAt.hour > 12 ? donationItem.createdAt.hour - 12 : donationItem.createdAt.hour}:${donationItem.createdAt.minute.toString().padLeft(2, '0')} ${donationItem.createdAt.hour >= 12 ? 'Pm' : 'Am'}',
-                              style: const TextStyle(color: Color(0xffB2B2B4)),
-                            ),
-                            Container(
-                              height: h * .03,
-                              width: w * .35,
-                              decoration: ShapeDecoration(
-                                color: status == 'pending'
-                                    ? const Color(0xffEEA820)
-                                    : status == 'canceled'
-                                        ? Colors.red
-                                        : Colors.green,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(w * .1)),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                '${donationItem.createdAt.day}-${donationItem.createdAt.month}-${donationItem.createdAt.year}',
+                                style: const TextStyle(color: Color(0xffB2B2B4)),
                               ),
-                              child: Center(
-                                child: Text(
-                                  status,
-                                  style: const TextStyle(color: Colors.white),
+                              Text(
+                                '${donationItem.createdAt.hour > 12 ? donationItem.createdAt.hour - 12 : donationItem.createdAt.hour}:${donationItem.createdAt.minute.toString().padLeft(2, '0')} ${donationItem.createdAt.hour >= 12 ? 'Pm' : 'Am'}',
+                                style: const TextStyle(color: Color(0xffB2B2B4)),
+                              ),
+                              Container(
+                                height: h * .03,
+                                decoration: ShapeDecoration(
+                                  color: status == 'pending'
+                                      ? const Color(0xffEEA820)
+                                      : status == 'canceled'
+                                          ? Colors.red
+                                          : Colors.green,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(w * .1)),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    status,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
+
                       ],
                     ),
                   ),
@@ -123,7 +129,7 @@ class HistoryItem extends StatelessWidget {
                                   value: 1, child: Text("cancel donation")),
                             ];
                           }, onSelected: (value) {
-                            if (status != 'canceled') {
+                            if (value == 1) {
                               BlocProvider.of<CancelDonationCubit>(context)
                                   .cancelDonation(donationItem.id);
                             }

@@ -1,3 +1,4 @@
+import 'package:hand2hand/features/explore_charities/data/models/Charities.dart';
 import 'package:hand2hand/features/home/data/models/one_post_model.dart';
 import 'package:hand2hand/features/home/data/models/posts_model.dart';
 
@@ -26,4 +27,16 @@ class FetchOnePostsSuccess extends FetchPostsState {
 class FetchOnePostsFailure extends FetchPostsState {
   final String message;
   FetchOnePostsFailure(this.message);
+}
+
+class GetSearchCharitiesLoading extends FetchPostsState {}
+
+class GetSearchCharitiesSuccess extends FetchPostsState {
+  final Charities charities;
+  GetSearchCharitiesSuccess(this.charities);
+}
+
+class GetSearchCharitiesFailure extends FetchPostsState {
+  final String message;
+  GetSearchCharitiesFailure(this.message);
 }

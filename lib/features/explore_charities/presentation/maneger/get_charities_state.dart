@@ -18,3 +18,17 @@ class GetCharitiesFailure extends GetCharitiesState {
 
   GetCharitiesFailure(this.message);
 }
+
+class GetSearchCharitiesLoading extends GetCharitiesState {}
+
+class GetSearchCharitiesSuccess extends GetCharitiesState {
+  final Charities charities;
+
+  GetSearchCharitiesSuccess(this.charities);
+}
+
+class GetSearchCharitiesFailure extends GetCharitiesState {
+  final String message;
+
+  GetSearchCharitiesFailure(this.message);
+}
