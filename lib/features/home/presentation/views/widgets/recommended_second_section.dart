@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
+import 'package:hand2hand/features/home/data/models/posts_model.dart';
 
 
 class RecommendedSecondSection extends StatelessWidget {
-  const RecommendedSecondSection({super.key});
-
+  const RecommendedSecondSection({super.key, required this.posts, required this.index});
+  final PostsModel posts;
+  final int index;
   @override
   Widget build(BuildContext context) {
     final w = SizeApp(context).width;
@@ -18,7 +20,14 @@ class RecommendedSecondSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Educate Every child. Join Our Mission for Quality Education:',
+                posts.posts[index].title,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: w * .043,
+                ),
+              ),
+              Text(
+                posts.posts[index].desc,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: w * .043,
@@ -26,7 +35,6 @@ class RecommendedSecondSection extends StatelessWidget {
               ),
               SizedBox(height: h * .01),
               Container(
-                height: h * .007,
                 width: w * .4,
                 decoration: BoxDecoration(
                     color: Colors.green,
@@ -36,14 +44,9 @@ class RecommendedSecondSection extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'Target: ',
+                    posts.posts[index].createdBy.charityName,
                     style: TextStyle(color: Colors.grey, fontSize: w * .04),
                   ),
-                  Text(
-                    r'150,000 $ ',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: w * .05),
-                  )
                 ],
               )
             ],

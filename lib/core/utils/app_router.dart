@@ -14,7 +14,7 @@ import 'package:hand2hand/features/home/presentation/views/home_view.dart';
 import 'package:hand2hand/features/on_boarding/views/on_boarding.dart';
 import 'package:hand2hand/features/profile/presentation/views/edit_profile_view.dart';
 import 'package:hand2hand/features/profile/presentation/views/profile_view.dart';
-import 'package:hand2hand/features/volunteer/views/volunteer_view.dart';
+import 'package:hand2hand/features/volunteer/presentation/views/volunteer_view.dart';
 import '../../features/Auth/presentation/views/login_view.dart';
 import '../../features/splash/presentation/views/splash_view.dart';
 
@@ -76,7 +76,7 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: campaign,
-        builder: (context, state) => const CampaignDetailsView(),
+        builder: (context, state) =>  CampaignDetailsView(id: state.extra as String,),
       ),
       GoRoute(
         path: exploreCharities,
@@ -93,7 +93,7 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: volunteer,
-        builder: (context, state) => const VolunteerView(),
+        builder: (context, state) =>  VolunteerView(id:state.extra as String ,),
       ),
       GoRoute(
         path: profile,

@@ -4,8 +4,8 @@ import 'package:hand2hand/core/utils/media_query.dart';
 
 
 class CampaignDetailsImage extends StatelessWidget {
-  const CampaignDetailsImage({super.key});
-
+  const CampaignDetailsImage({super.key, required this.image});
+  final String image;
   @override
   Widget build(BuildContext context) {
     final w = SizeApp(context).width;
@@ -15,8 +15,8 @@ class CampaignDetailsImage extends StatelessWidget {
       height: h * .28,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(w * .04),
-        image: const DecorationImage(
-          image: AssetImage(AssetsService.homeImage),
+        image:  DecorationImage(
+          image: NetworkImage(image),
           fit: BoxFit.cover,
         ),
       ),

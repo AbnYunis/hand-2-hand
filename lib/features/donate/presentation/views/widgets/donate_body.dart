@@ -90,7 +90,6 @@ class DonateBody extends StatelessWidget {
                                 InkWell(
                                   child: Image.asset(
                                     AssetsService.camera,
-                                    height: h * .2,
                                   ),
                                   onTap: () async {
                                     final nav = Navigator.of(context);

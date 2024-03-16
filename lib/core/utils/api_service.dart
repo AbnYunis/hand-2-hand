@@ -10,17 +10,15 @@ class ApiService {
   Future<Map<String, dynamic>> getData({required String endPoint}) async {
     dio.options.headers = {'token': SharedData.getToken()};
     final response = await dio.get('$baseUrl$endPoint');
-
     return response.data;
   }
-
-  Future<Map<String, dynamic>> deleteData({required String endPoint}) async {
-    dio.options.headers = {'token': SharedData.getToken()};
-    dio.options.queryParameters = {'lang': SharedData.getUserLan()};
-    final response = await dio.delete('$baseUrl$endPoint');
-
-    return response.data;
-  }
+  // Future<Map<String, dynamic>> deleteData({required String endPoint}) async {
+  //   dio.options.headers = {'token': SharedData.getToken()};
+  //   dio.options.queryParameters = {'lang': SharedData.getUserLan()};
+  //   final response = await dio.delete('$baseUrl$endPoint');
+  //
+  //   return response.data;
+  // }
 
   Future<Map<String, dynamic>> postData(
       {required String endPoint, required Object? data}) async {

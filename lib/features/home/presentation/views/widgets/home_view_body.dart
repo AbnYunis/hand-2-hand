@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hand2hand/core/utils/app_router.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
+import 'package:hand2hand/features/home/presentation/manager/fetch_posts_cubit.dart';
+import 'package:hand2hand/features/home/presentation/manager/fetch_posts_state.dart';
 import 'package:hand2hand/features/home/presentation/views/widgets/favourite_widget.dart';
 
 import 'custom_texts_widget.dart';
@@ -18,23 +22,38 @@ class HomeViewBody extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: w * .05, vertical: h * .01),
       physics: const BouncingScrollPhysics(),
       children: [
+
         /// The texts hello
         const CustomTextsWidget(),
 
         /// search text field
-
+        TextButton(
+            onPressed: () {
+              GoRouter.of(context).push(AppRouter.exploreCharities);
+            },
+            child: Row(
+              children: [
+                const Text(
+                  'See all charities',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBoxApp(
+                  w: .05,
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_outlined,
+                  size: w * .05,
+                  color: Colors.black,
+                ),
+              ],
+            )),
         const SearchTextField(),
         SizedBox(height: h * .015),
 
         /// The favourite list
-        const Text(
-          'See all charities',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: h * .015),
         const DonateWidget(),
         SizedBox(height: h * .015),
 
@@ -50,12 +69,35 @@ class HomeViewBody extends StatelessWidget {
         /// The recommendation list items
         SizedBox(
           height: 400,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 4,
-            itemBuilder: (context, index) {
-              return RecommendedWidget(
-                  index + 1); // Add 1 to start index from 1
+          child: BlocConsumer<FetchPostsCubit, FetchPostsState>(
+            listener: (context, state) {
+            },
+            builder: (context, state) {
+              if(state is FetchPostsSuccess){
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: state.postModel.posts.length,
+                  itemBuilder: (context, index) {
+                    return RecommendedWidget(
+                        index,postModel: state.postModel,); // Add 1 to start index from 1
+                  },
+                );
+              }else if(state is FetchPostsFailure){
+                return Container(
+                  height: 400,
+                  width: double.infinity,
+                  color: Colors.red.withOpacity(0.3),
+                  child: IconButton(onPressed: (){BlocProvider.of<FetchPostsCubit>(context).fetchPosts();}, icon: Column(
+                    children: [
+                      Icon(Icons.error_outline_sharp),
+                      Text('try again')
+                    ],
+                  )),
+                );
+              }else{
+                return SizedBox(height:400,child: Center(child: CircularProgressIndicator()));
+              }
+
             },
           ),
         ),

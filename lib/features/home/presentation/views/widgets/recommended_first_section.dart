@@ -4,8 +4,8 @@ import 'package:hand2hand/core/utils/media_query.dart';
 
 
 class RecommendedFirstSection extends StatelessWidget {
-  const RecommendedFirstSection({super.key});
-
+  const RecommendedFirstSection({super.key, required this.image});
+  final String image;
   @override
   Widget build(BuildContext context) {
     final w = SizeApp(context).width;
@@ -16,8 +16,8 @@ class RecommendedFirstSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.grey.withOpacity(.2),
         borderRadius: BorderRadius.circular(w * .04),
-        image: const DecorationImage(
-          image: AssetImage(AssetsService.homeImage),
+        image:  DecorationImage(
+          image: NetworkImage(image),
           fit: BoxFit.cover,
         ),
       ),
