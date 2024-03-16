@@ -22,38 +22,23 @@ class HomeViewBody extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: w * .05, vertical: h * .01),
       physics: const BouncingScrollPhysics(),
       children: [
-
         /// The texts hello
         const CustomTextsWidget(),
 
         /// search text field
-        TextButton(
-            onPressed: () {
-              GoRouter.of(context).push(AppRouter.exploreCharities);
-            },
-            child: Row(
-              children: [
-                const Text(
-                  'See all charities',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBoxApp(
-                  w: .05,
-                ),
-                Icon(
-                  Icons.arrow_forward_ios_outlined,
-                  size: w * .05,
-                  color: Colors.black,
-                ),
-              ],
-            )),
+
         const SearchTextField(),
         SizedBox(height: h * .015),
 
         /// The favourite list
+        const Text(
+          'See all charities',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: h * .015),
         const DonateWidget(),
         SizedBox(height: h * .015),
 

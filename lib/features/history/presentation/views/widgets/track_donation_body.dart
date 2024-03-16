@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
+import 'package:hand2hand/features/history/data/models/history_model.dart';
 import 'package:hand2hand/features/history/presentation/views/widgets/custom_stepper_item.dart';
+import 'package:hand2hand/features/history/presentation/views/widgets/history_item.dart';
 
 class TrackDonationBody extends StatelessWidget {
-  const TrackDonationBody({super.key});
+  final DonationItem donationItem;
+  final String status;
+
+  const TrackDonationBody({
+    super.key,
+    required this.donationItem,
+    required this.status,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +26,29 @@ class TrackDonationBody extends StatelessWidget {
           const SizedBoxApp(
             h: .03,
           ),
-          // const HistoryItem(donationItem: ,),
+          HistoryItem(
+            donationItem: donationItem,
+          ),
+          const SizedBoxApp(
+            h: .02,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              donationItem.desc,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
           const SizedBoxApp(
             h: .05,
           ),
-          const CustomStepperItem(),
+          CustomStepperItem(
+            text1: 'Donation Requested',
+            text2:
+                '${donationItem.createdAt.day}-${donationItem.createdAt.month}-${donationItem.createdAt.year}',
+            icon: Icons.done,
+            color: Colors.green,
+          ),
           Padding(
             padding: EdgeInsets.only(left: w * .04),
             child: Container(
@@ -30,7 +57,13 @@ class TrackDonationBody extends StatelessWidget {
               width: 1,
             ),
           ),
-          const CustomStepperItem(),
+          CustomStepperItem(
+            text1: 'Donation in progress',
+            text2:
+                '${donationItem.createdAt.day}-${donationItem.createdAt.month}-${donationItem.createdAt.year}',
+            icon: Icons.done,
+            color: Colors.green,
+          ),
           Padding(
             padding: EdgeInsets.only(left: w * .04),
             child: Container(
@@ -39,7 +72,21 @@ class TrackDonationBody extends StatelessWidget {
               width: 1,
             ),
           ),
-          const CustomStepperItem(),
+          CustomStepperItem(
+            text1: 'Donation $status',
+            text2:
+                '${donationItem.createdAt.day}-${donationItem.createdAt.month}-${donationItem.createdAt.year}',
+            icon: status == 'canceled'
+                ? Icons.close
+                : status == 'pending'
+                    ? Icons.more_horiz
+                    : Icons.done,
+            color: status == 'canceled'
+                ? Colors.red
+                : status == 'pending'
+                    ? Colors.orange
+                    : Colors.green,
+          ),
         ],
       ),
     );

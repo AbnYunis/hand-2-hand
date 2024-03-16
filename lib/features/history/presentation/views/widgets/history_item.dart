@@ -22,15 +22,16 @@ class HistoryItem extends StatelessWidget {
       create: (context) => CancelDonationCubit(sl<HistoryRepoImplement>()),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: h * .01),
-        child: InkWell(
-           onTap: () => GoRouter.of(context).push(AppRouter.trackDonation),
-          child: BlocBuilder<CancelDonationCubit, CancelDonationState>(
-            builder: (context, state) {
-              String status = donationItem.status;
-              if (state is DonationCanceledSuccess) {
-                status = 'canceled';
-              }
-              return Stack(
+        child: BlocBuilder<CancelDonationCubit, CancelDonationState>(
+          builder: (context, state) {
+            String status = donationItem.status;
+            if (state is DonationCanceledSuccess) {
+              status = 'canceled';
+            }
+            return InkWell(
+              onTap: () => GoRouter.of(context).push(AppRouter.trackDonation,
+                  extra: {'donationItem': donationItem, 'status': status}),
+              child: Stack(
                 children: [
                   Container(
                     padding: EdgeInsets.all(w * .02),
@@ -129,9 +130,9 @@ class HistoryItem extends StatelessWidget {
                           }),
                         ),
                 ],
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

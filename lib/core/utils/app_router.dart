@@ -6,6 +6,7 @@ import 'package:hand2hand/features/Auth/presentation/views/verify_view.dart';
 import 'package:hand2hand/features/donate/presentation/views/congratulation_view.dart';
 import 'package:hand2hand/features/donate/presentation/views/donate_view.dart';
 import 'package:hand2hand/features/explore_charities/presentation/views/explore_charities_view.dart';
+import 'package:hand2hand/features/history/data/models/history_model.dart';
 import 'package:hand2hand/features/history/presentation/views/history_view.dart';
 import 'package:hand2hand/features/history/presentation/views/track_donation_view.dart';
 import 'package:hand2hand/features/home/presentation/views/campaign_details_view.dart';
@@ -76,7 +77,9 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: campaign,
-        builder: (context, state) =>  CampaignDetailsView(id: state.extra as String,),
+        builder: (context, state) => CampaignDetailsView(
+          id: state.extra as String,
+        ),
       ),
       GoRoute(
         path: exploreCharities,
@@ -93,7 +96,9 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: volunteer,
-        builder: (context, state) =>  VolunteerView(id:state.extra as String ,),
+        builder: (context, state) => VolunteerView(
+          id: state.extra as String,
+        ),
       ),
       GoRoute(
         path: profile,
@@ -109,7 +114,9 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: trackDonation,
-        builder: (context, state) => const TrackDonationView(),
+        builder: (context, state) => TrackDonationView(
+          data: state.extra as Map<String ,dynamic>,
+        ),
       ),
     ],
   );

@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hand2hand/features/history/data/models/history_model.dart';
 import 'package:hand2hand/features/history/presentation/views/widgets/track_donation_body.dart';
 
 class TrackDonationView extends StatelessWidget {
-  const TrackDonationView({super.key});
+  const TrackDonationView({
+    super.key,
+    required this.data,
+  });
+
+  final Map<String, dynamic> data;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +18,10 @@ class TrackDonationView extends StatelessWidget {
           centerTitle: true,
           title: const Text('Track Donation'),
         ),
-        body: const TrackDonationBody(),
+        body: TrackDonationBody(
+          donationItem: data['donationItem'],
+          status: data['status'],
+        ),
       ),
     );
   }
