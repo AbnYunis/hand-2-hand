@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import 'package:hand2hand/core/widgets/custom_bnb.dart';
-import 'package:hand2hand/features/Auth/presentation/views/create_as_view.dart';
 import 'package:hand2hand/features/Auth/presentation/views/forget_pass_view.dart';
 import 'package:hand2hand/features/Auth/presentation/views/register_view.dart';
 import 'package:hand2hand/features/Auth/presentation/views/verify_view.dart';
@@ -23,7 +22,6 @@ abstract class AppRouter {
   static const login = '/login';
   static const forgetPass = '/forgetPass';
   static const verify = '/verify';
-  static const createAs = '/createAs';
   static const register = '/register';
   static const home = '/home';
   static const campaign = '/campaign';
@@ -60,10 +58,6 @@ abstract class AppRouter {
         builder: (context, state) => VerifyView(
           parameters: state.extra as Map<String, dynamic>,
         ),
-      ),
-      GoRoute(
-        path: createAs,
-        builder: (context, state) => const CreateAsView(),
       ),
       GoRoute(
         path: register,

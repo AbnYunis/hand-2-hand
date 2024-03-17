@@ -129,7 +129,7 @@ class HistoryItem extends StatelessWidget {
                                   value: 1, child: Text("cancel donation")),
                             ];
                           }, onSelected: (value) {
-                            if (value == 1) {
+                            if (status!='canceled') {
                               BlocProvider.of<CancelDonationCubit>(context)
                                   .cancelDonation(donationItem.id);
                             }

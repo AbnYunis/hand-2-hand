@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hand2hand/core/functions/load_image_fun.dart';
 import 'package:hand2hand/core/utils/app_router.dart';
 import 'package:hand2hand/core/utils/functions/assets_service.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
@@ -42,9 +45,25 @@ class HomeView extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () => GoRouter.of(context).push(AppRouter.profile),
-                    child: CircleAvatar(
-                      radius: w * .05,
+                    child: SharedData.getUserImage()!.contains("http")  ? CircleAvatar(
+                      radius: w * .07,
                       backgroundImage: NetworkImage(SharedData.getUserImage()!),
+                    ) : FutureBuilder<File>(
+                      future: loadImageFromPrefs(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const CircularProgressIndicator(); // Placeholder widget while loading
+                        } else if (snapshot.hasError) {
+                          print(snapshot.error);
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          final image = snapshot.data!;
+                          return CircleAvatar(
+                            radius: w * .07,
+                            backgroundImage:FileImage(image) as ImageProvider,
+                          );
+                        }
+                      },
                     ),
                   ),
                   SizedBox(

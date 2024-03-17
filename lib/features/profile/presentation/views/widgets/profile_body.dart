@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hand2hand/core/functions/load_image_fun.dart';
 import 'package:hand2hand/core/utils/app_router.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 import 'package:hand2hand/core/utils/shared_data.dart';
@@ -15,6 +17,7 @@ class ProfileBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final w = SizeApp(context).width;
     final h = SizeApp(context).height;
+    print(SharedData.getToken());
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -22,9 +25,26 @@ class ProfileBody extends StatelessWidget {
           const SizedBoxApp(
             h: .1,
           ),
-          CircleAvatar(
-              radius: w * .12,
-              backgroundImage: NetworkImage(SharedData.getUserImage()!)),
+          SharedData.getUserImage()!.contains("http")  ? CircleAvatar(
+            radius: w * .12,
+            backgroundImage: NetworkImage(SharedData.getUserImage()!),
+          ) : FutureBuilder<File>(
+            future: loadImageFromPrefs(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator(); // Placeholder widget while loading
+              } else if (snapshot.hasError) {
+                print(snapshot.error);
+                return Text('Error: ${snapshot.error}');
+              } else {
+                final image = snapshot.data!;
+                return CircleAvatar(
+                  radius: w * .12,
+                  backgroundImage:FileImage(image) as ImageProvider,
+                );
+              }
+            },
+          ),
           const SizedBoxApp(
             h: .05,
           ),

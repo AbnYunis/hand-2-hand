@@ -36,8 +36,10 @@ class User {
   DateTime updatedAt;
   int v;
   String? otp;
+  String? token;
   String userId;
   String? secureUrl;
+  ProfilePic? profilePic;
 
   User(
       {required this.userName,
@@ -53,8 +55,10 @@ class User {
       required this.updatedAt,
       required this.v,
       this.otp,
+      this.token,
       required this.userId,
-      this.secureUrl});
+      this.profilePic,
+      });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         userName: json["userName"],
@@ -70,9 +74,14 @@ class User {
         updatedAt: DateTime.parse(json["updatedAt"]),
         v: json["__v"],
         otp: json["OTP"] ?? '12345',
+        token: json["token"] ?? '12345',
         userId: json["id"],
-        secureUrl: json['profile_pic']['secure_url'] ??
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh1MxDvWeEQ39D04ETGLuJ_pnSkd_gZf47R7qkQaxbHotxVs-aBvYjsHmbvxcKhTGn9gI&usqp=CAU',
+        profilePic: ProfilePic.fromJson(json['profile_pic'] ??
+          {
+            'secure_url':
+            'https://cdn-icons-png.flaticon.com/512/149/149071.png',
+            'public_id': '',
+          })
       );
 
   Map<String, dynamic> toJson() => {
@@ -89,6 +98,28 @@ class User {
         "updatedAt": updatedAt.toIso8601String(),
         "__v": v,
         "OTP": otp ?? '123456',
+        "token": token ?? '123456',
         "id": userId,
+      };
+}
+class ProfilePic {
+  String publicId;
+  String secureUrl;
+
+  ProfilePic({
+    required this.publicId,
+    required this.secureUrl,
+  });
+
+  factory ProfilePic.fromJson(Map<String, dynamic> json) =>
+      ProfilePic(
+        publicId: json["public_id"],
+        secureUrl: json["secure_url"],
+      );
+
+  Map<String, dynamic> toJson() =>
+      {
+        "public_id": publicId,
+        "secure_url": secureUrl,
       };
 }

@@ -25,7 +25,7 @@ class HistoryBody extends StatelessWidget {
                     TextStyle(fontSize: w * .05, fontWeight: FontWeight.bold),
               ),
             ),
-            BlocBuilder<DonationHistoryCubit, DonationHistoryState>(
+            BlocConsumer<DonationHistoryCubit, DonationHistoryState>(
               builder: (context, state) {
                 if (state is DonationHistorySuccess) {
                   final donations = state.donationHistoryModel.donations;
@@ -62,7 +62,7 @@ class HistoryBody extends StatelessWidget {
                     ],
                   );
                 }
-              },
+              }, listener: (BuildContext context, DonationHistoryState state) {  },
             ),
           ],
         ),

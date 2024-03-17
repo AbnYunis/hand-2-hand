@@ -35,9 +35,8 @@ class RegisterForm extends StatelessWidget {
       listener: (context, state) {
           if (state is AuthSuccess) {
     GoRouter.of(context).push(AppRouter.forgetPass,extra: true);
-    snackBar(state.registerModel.message, context, Colors.white);
+    snackBar(state.authModel.message, context, Colors.white);
     AuthCubit(sl<AuthRepoImplementation>()).close();
-
           }
           if (state is AuthFailure) {
     snackBar(state.errMessage, context, Colors.red);
@@ -76,24 +75,40 @@ class RegisterForm extends StatelessWidget {
                   ),
                   const SizedBoxApp(h: 0.025),
                   CustomAuthTextField(
+                    isPassword: true,
                     controller: passController,
                     text: 'Password',
                     icon: Icons.lock_outline_rounded,
                     validate: (p0) {
+                      RegExp regex = RegExp(
+                          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$&*~]).{6,}$');
                       if (p0!.isEmpty) {
-                        return "please enter your password";
+                        return "Please enter your password!";
+                      } else if (rePassController.text !=
+                          passController.text) {
+                        return "Password does not match!";
+                      } else if (!regex.hasMatch(p0)) {
+                        return "Password Must be at least 6 characters and should contain at least one upper case , lower case ,Special character and one digit";
                       }
                       return null;
                     },
                   ),
                   const SizedBoxApp(h: 0.025),
                   CustomAuthTextField(
+                    isPassword: true,
                     controller: rePassController,
                     text: 'Confirm Password',
                     icon: Icons.lock_outline_rounded,
                     validate: (p0) {
+                      RegExp regex = RegExp(
+                          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$&*~]).{6,}$');
                       if (p0!.isEmpty) {
-                        return "please enter your password";
+                        return "Please enter your password!";
+                      } else if (rePassController.text !=
+                          passController.text) {
+                        return "Password does not match!";
+                      } else if (!regex.hasMatch(p0)) {
+                        return "Password Must be at least 6 characters and should contain at least one upper case , lower case ,Special character and one digit";
                       }
                       return null;
                     },

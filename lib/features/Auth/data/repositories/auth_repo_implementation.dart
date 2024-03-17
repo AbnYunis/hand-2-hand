@@ -60,7 +60,7 @@ class AuthRepoImplementation extends AuthRepo {
 
       final res =
           await apiService.postData(endPoint: 'auth/signup', data: data);
-
+      print(res);
       if (res['message'] == 'success') {
         return right(AuthModel.fromJson(res));
       } else {

@@ -4,12 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:hand2hand/constants.dart';
 import 'package:hand2hand/core/utils/app_router.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
-import 'package:hand2hand/core/utils/service_locator.dart';
 import 'package:hand2hand/core/utils/shared_data.dart';
 import 'package:hand2hand/core/widgets/custom_auth_text_field.dart';
 import 'package:hand2hand/core/widgets/custom_rectangle_button.dart';
 import 'package:hand2hand/core/widgets/custom_snack_bar.dart';
-import 'package:hand2hand/features/Auth/data/repositories/auth_repo_implementation.dart';
 import 'package:hand2hand/features/Auth/presentation/manager/auth_cubit/auth_cubit.dart';
 
 import 'right_part.dart';
@@ -28,18 +26,19 @@ class LoginForm extends StatelessWidget {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-          SharedData.saveToken(token: state.registerModel.token!);
-          SharedData.saveUserEmail(userEmail: state.registerModel.user.email);
-          SharedData.saveUserId(userId: state.registerModel.user.userId);
-          SharedData.saveUserName(userName: state.registerModel.user.userName);
-          SharedData.saveUserPhone(userPhone: state.registerModel.user.phone);
-          SharedData.saveIsLogin(isLogin: state.registerModel.user.isLoggedIn);
-          SharedData.saveUserImage(
-              userImage: state.registerModel.user.secureUrl!);
+          SharedData.saveToken(token: state.authModel.token!);
+          SharedData.saveUserEmail(userEmail: state.authModel.user.email);
+          SharedData.saveUserId(userId: state.authModel.user.userId);
+          SharedData.saveUserName(userName: state.authModel.user.userName);
+          SharedData.saveUserPhone(userPhone: state.authModel.user.phone);
+          SharedData.saveIsLogin(isLogin: state.authModel.user.isLoggedIn);
+          if(SharedData.getUserImage() == null){
+            SharedData.saveUserImage(userImage: state.authModel.user.secureUrl!);
+          }
 
           GoRouter.of(context).go(AppRouter.home);
-          snackBar(state.registerModel.message, context, Colors.white);
-          AuthCubit(sl<AuthRepoImplementation>()).close();
+          snackBar(state.authModel.message, context, Colors.white);
+          //AuthCubit(sl<AuthRepoImplementation>()).close();
         }
         if (state is AuthFailure) {
           snackBar(state.errMessage, context, Colors.red);
@@ -82,10 +81,15 @@ class LoginForm extends StatelessWidget {
                     h: 0.035,
                   ),
                   CustomAuthTextField(
+                    isPassword: true,
                     text: 'password',
                     validate: (p0) {
+                      RegExp regex = RegExp(
+                          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$&*~]).{6,}$');
                       if (p0!.isEmpty) {
-                        return "please enter your password";
+                        return "Please enter your password!";
+                      } else if (!regex.hasMatch(p0)) {
+                        return "Password Must be at least 6 characters and should contain at least one upper case , lower case ,Special character and one digit";
                       }
                       return null;
                     },

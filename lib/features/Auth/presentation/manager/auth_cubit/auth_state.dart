@@ -8,9 +8,9 @@ class AuthInitial extends AuthState {}
 class AuthLoading extends AuthState {}
 
 class AuthSuccess extends AuthState {
-  final AuthModel registerModel;
+  final AuthModel authModel;
 
-  AuthSuccess(this.registerModel);
+  AuthSuccess(this.authModel);
 }
 
 class AuthFailure extends AuthState {

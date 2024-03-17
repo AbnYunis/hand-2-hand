@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand2hand/constants.dart';
+import 'package:hand2hand/core/functions/load_image_fun.dart';
 import 'package:hand2hand/core/utils/functions/load_image.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 import 'package:hand2hand/core/utils/shared_data.dart';
@@ -80,9 +81,25 @@ class EditImageWidget extends StatelessWidget {
           child: Stack(
             alignment: AlignmentDirectional.bottomEnd,
             children: [
-              CircleAvatar(
+              SharedData.getUserImage()!.contains("http")  ? CircleAvatar(
+                radius: w * .1,
                 backgroundImage: NetworkImage(SharedData.getUserImage()!),
-                radius: w * 0.1,
+              ) : FutureBuilder<File>(
+                future: loadImageFromPrefs(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator(); // Placeholder widget while loading
+                  } else if (snapshot.hasError) {
+                    print(snapshot.error);
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    final image = snapshot.data!;
+                    return CircleAvatar(
+                      radius: w * .1,
+                      backgroundImage:FileImage(image) as ImageProvider,
+                    );
+                  }
+                },
               ),
               CircleAvatar(
                 radius: w * 0.035,

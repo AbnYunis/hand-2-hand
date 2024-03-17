@@ -22,7 +22,7 @@ class SignUpOrIn extends StatelessWidget {
         ),
         TextButton(
             onPressed: () {
-              GoRouter.of(context).push(AppRouter.createAs);
+              GoRouter.of(context).push(AppRouter.register);
             },
             child: Text(
               'Sign Up',

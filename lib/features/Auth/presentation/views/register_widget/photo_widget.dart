@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hand2hand/constants.dart';
+import 'package:hand2hand/core/functions/load_image_fun.dart';
 import 'package:hand2hand/core/utils/functions/load_image.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 import 'package:hand2hand/core/utils/shared_data.dart';
@@ -17,6 +18,7 @@ class PhotoWidget extends StatefulWidget {
 
 class _PhotoWidgetState extends State<PhotoWidget> {
   File? imageFile;
+
   @override
   Widget build(BuildContext context) {
 
@@ -40,7 +42,7 @@ class _PhotoWidgetState extends State<PhotoWidget> {
                 backgroundImage: imageFile != null
                     ? FileImage(imageFile!) as ImageProvider
                     : const NetworkImage(
-                    'https://www.footballdatabase.eu/images/photos/players/a_8/8471.jpg'),
+                    'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
               )
             ],
           ),
@@ -49,12 +51,14 @@ class _PhotoWidgetState extends State<PhotoWidget> {
           radius: SizeApp(context).width * 0.05,
           backgroundColor: iconsColor,
           child: IconButton(
-              onPressed: () {
-                chooseImage(context, imageFile)
-                    .then((value) {setState(() {
-                  imageFile = value;
-                  _saveImageToPrefs(imageFile);
-                    });});
+              onPressed: () async {
+                final chosenImage = await chooseImage(context, imageFile);
+                await _saveImageToPrefs(chosenImage);
+                final loadImage=await loadImageFromPrefs();
+                final loadedImage = File(loadImage.path);
+                setState(() {
+                  imageFile = loadedImage;
+                });
               },
               icon: Icon(
                 Icons.camera_enhance_sharp,
@@ -69,4 +73,5 @@ class _PhotoWidgetState extends State<PhotoWidget> {
     final String encodedImage = base64Encode(bytes);
     SharedData.saveUserImage(userImage: encodedImage);
   }
+
 }
