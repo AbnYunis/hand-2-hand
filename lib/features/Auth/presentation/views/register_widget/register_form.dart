@@ -8,6 +8,7 @@ import 'package:hand2hand/core/widgets/custom_rectangle_button.dart';
 import 'package:hand2hand/core/widgets/custom_snack_bar.dart';
 import 'package:hand2hand/features/Auth/data/repositories/auth_repo_implementation.dart';
 import 'package:hand2hand/features/Auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:hand2hand/features/Auth/presentation/manager/auth_cubit/auth_state.dart';
 
 import '../../../../../core/utils/app_router.dart';
 

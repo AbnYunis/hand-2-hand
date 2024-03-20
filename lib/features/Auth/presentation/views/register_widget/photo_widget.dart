@@ -71,7 +71,7 @@ class _PhotoWidgetState extends State<PhotoWidget> {
   Future<void> _saveImageToPrefs(File? imageFile) async {
     final bytes = await imageFile!.readAsBytes();
     final String encodedImage = base64Encode(bytes);
-    SharedData.saveUserImage(userImage: encodedImage);
+    SharedData.saveLocalUserImage(userLocalImage: encodedImage);
   }
 
 }

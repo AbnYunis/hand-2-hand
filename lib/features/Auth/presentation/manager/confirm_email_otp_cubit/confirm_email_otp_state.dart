@@ -1,9 +1,7 @@
 
-import 'package:flutter/material.dart';
 import 'package:hand2hand/features/Auth/data/models/confirm_email_model.dart';
 
 
-@immutable
 abstract class ConfirmEmailByOTPState {}
 
 class ConfirmEmailInitial extends ConfirmEmailByOTPState {}

@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart';
 
 Future<File> loadImageFromPrefs() async {
   // Load the encoded image string from shared preferences
-  String? encodedImage = SharedData.getUserImage();
+  String? encodedImage = SharedData.getLocalUserImage();
 
 
   // Decode the image string back to bytes

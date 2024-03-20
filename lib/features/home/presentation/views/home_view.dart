@@ -45,7 +45,7 @@ class HomeView extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () => GoRouter.of(context).push(AppRouter.profile),
-                    child: SharedData.getUserImage()!.contains("http")  ? CircleAvatar(
+                    child:SharedData.getUserImage()!.isNotEmpty  ? CircleAvatar(
                       radius: w * .07,
                       backgroundImage: NetworkImage(SharedData.getUserImage()!),
                     ) : FutureBuilder<File>(

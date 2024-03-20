@@ -1,18 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hand2hand/features/Auth/data/models/register_model.dart';
+import 'package:hand2hand/features/Auth/presentation/manager/auth_cubit/auth_state.dart';
 
 import '../../../data/repositories/auth_repo.dart';
 
-part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  bool isLogin = true;
 
-  void onPressed() {
-    isLogin = !isLogin;
-    emit(AuthInitial());
-  }
 
   AuthCubit(this.authRepo) : super(AuthInitial());
   final AuthRepo authRepo;

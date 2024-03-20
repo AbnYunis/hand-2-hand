@@ -15,6 +15,9 @@ class SharedData {
     await prefs?.setString('userId', userId);
   }
 
+  static void saveLocalUserImage({required String userLocalImage}) async {
+    await prefs?.setString('userLocalImage', userLocalImage);
+  }
   static void saveUserImage({required String userImage}) async {
     await prefs?.setString('userImage', userImage);
   }
@@ -47,6 +50,9 @@ class SharedData {
     return prefs?.getString('userId');
   }
 
+  static String? getLocalUserImage() {
+    return prefs?.getString('userLocalImage');
+  }
   static String? getUserImage() {
     return prefs?.getString('userImage');
   }

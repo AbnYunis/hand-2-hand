@@ -61,7 +61,7 @@ class ForgetForm extends StatelessWidget {
                    text: 'Submit',
                    press: () {
                      if(formKey.currentState!.validate()){
-                       BlocProvider.of<GenerateOtpCubit>(context).generateOtp(email: emailController.text);
+
                      }
                    },
                  ),

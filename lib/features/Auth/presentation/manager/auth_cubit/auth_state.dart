@@ -1,6 +1,6 @@
-part of 'auth_cubit.dart';
 
-@immutable
+import 'package:hand2hand/features/Auth/data/models/register_model.dart';
+
 abstract class AuthState {}
 
 class AuthInitial extends AuthState {}

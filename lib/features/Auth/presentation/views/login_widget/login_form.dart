@@ -9,6 +9,7 @@ import 'package:hand2hand/core/widgets/custom_auth_text_field.dart';
 import 'package:hand2hand/core/widgets/custom_rectangle_button.dart';
 import 'package:hand2hand/core/widgets/custom_snack_bar.dart';
 import 'package:hand2hand/features/Auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:hand2hand/features/Auth/presentation/manager/auth_cubit/auth_state.dart';
 
 import 'right_part.dart';
 import 'sign_up_in.dart';
@@ -32,8 +33,8 @@ class LoginForm extends StatelessWidget {
           SharedData.saveUserName(userName: state.authModel.user.userName);
           SharedData.saveUserPhone(userPhone: state.authModel.user.phone);
           SharedData.saveIsLogin(isLogin: state.authModel.user.isLoggedIn);
-          if(SharedData.getUserImage() == null){
-            SharedData.saveUserImage(userImage: state.authModel.user.secureUrl!);
+          if(SharedData.getLocalUserImage() == null){
+            SharedData.saveUserImage(userImage: state.authModel.user.profilePic!.secureUrl);
           }
 
           GoRouter.of(context).go(AppRouter.home);

@@ -81,7 +81,7 @@ class EditImageWidget extends StatelessWidget {
           child: Stack(
             alignment: AlignmentDirectional.bottomEnd,
             children: [
-              SharedData.getUserImage()!.contains("http")  ? CircleAvatar(
+             SharedData.getUserImage()!.isNotEmpty  ? CircleAvatar(
                 radius: w * .1,
                 backgroundImage: NetworkImage(SharedData.getUserImage()!),
               ) : FutureBuilder<File>(

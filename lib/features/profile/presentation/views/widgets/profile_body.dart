@@ -25,7 +25,7 @@ class ProfileBody extends StatelessWidget {
           const SizedBoxApp(
             h: .1,
           ),
-          SharedData.getUserImage()!.contains("http")  ? CircleAvatar(
+          SharedData.getUserImage()!.isNotEmpty  ? CircleAvatar(
             radius: w * .12,
             backgroundImage: NetworkImage(SharedData.getUserImage()!),
           ) : FutureBuilder<File>(

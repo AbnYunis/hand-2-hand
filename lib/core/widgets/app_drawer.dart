@@ -35,7 +35,7 @@ class AppDrawer extends StatelessWidget {
                 'Profile',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              leading:SharedData.getUserImage()!.contains("http")  ? CircleAvatar(
+              leading:SharedData.getUserImage()!.isNotEmpty  ? CircleAvatar(
                 radius: w * .07,
                 backgroundImage: NetworkImage(SharedData.getUserImage()!),
               ) : FutureBuilder<File>(
