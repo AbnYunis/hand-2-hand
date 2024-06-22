@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hand2hand/constants.dart';
@@ -38,13 +39,32 @@ class _SplashBodyState extends State<SplashBody>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'Hand 2 Hand',
-            style: TextStyle(
-                fontFamily: 'splash',
-                fontSize: SizeApp(context).width * 0.13,
-                color: mainColor1),
+          AnimatedTextKit(
+            repeatForever: true,
+            pause: const Duration(seconds: 3),
+            animatedTexts: [
+              ColorizeAnimatedText(
+                'Hand 2 Hand',
+                textStyle: TextStyle(
+                    fontFamily: 'splash',
+                    fontSize: SizeApp(context).width * 0.13,
+                    color: mainColor1),
+                colors: [
+                  Colors.purple,
+                  Colors.blue,
+                  Colors.yellow,
+                  Colors.red,
+                ],
+              ),
+            ],
           ),
+          // Text(
+          //   'Hand 2 Hand',
+          //   style: TextStyle(
+          //       fontFamily: 'splash',
+          //       fontSize: SizeApp(context).width * 0.13,
+          //       color: mainColor1),
+          // ),
           SizedBox(
             height: SizeApp(context).height * 0.25,
           ),
@@ -59,7 +79,7 @@ class _SplashBodyState extends State<SplashBody>
 
   void initSlidingAnimation() {
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1500));
+        vsync: this, duration: const Duration(milliseconds: 500));
     slidingAnimation =
         Tween<Offset>(begin: const Offset(0, 3), end: Offset.zero)
             .animate(animationController);
