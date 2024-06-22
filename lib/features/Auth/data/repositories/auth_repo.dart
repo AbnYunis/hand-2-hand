@@ -21,6 +21,6 @@ abstract class AuthRepo {
   Future<Either<Failures, ConfirmEmailModel>> confirmEmailByOtp(
       String id, String otp, bool isRegister);
 
-  // Future<Either<Failures, String>> resetPassword(
-  //     String password, Map<String, dynamic> data);
+  Future<Either<Failures, String>> resetPassword(
+      String password, Map<String, dynamic> data);
 }

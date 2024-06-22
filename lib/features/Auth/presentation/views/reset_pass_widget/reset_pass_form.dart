@@ -8,30 +8,26 @@ import 'package:hand2hand/core/widgets/custom_auth_text_field.dart';
 import 'package:hand2hand/core/widgets/custom_rectangle_button.dart';
 import 'package:hand2hand/core/widgets/custom_snack_bar.dart';
 import 'package:hand2hand/features/Auth/data/repositories/auth_repo_implementation.dart';
-import 'package:hand2hand/features/Auth/presentation/manager/generate_otp_cubit/generate_otp_cubit.dart';
+import 'package:hand2hand/features/Auth/presentation/manager/reset_pass_cubit/reset_pass_cubit.dart';
 
-class ForgetForm extends StatelessWidget {
-  const ForgetForm({
-    super.key, required this.isRegister,
+class ResetPassForm extends StatelessWidget {
+  const ResetPassForm({
+    super.key, required this.parameters,
   });
-  final bool isRegister;
+  final Map<String, dynamic> parameters;
 
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> formKey = GlobalKey();
     TextEditingController emailController=TextEditingController();
-    return BlocConsumer<GenerateOtpCubit,GenerateOtpState>(
+    return BlocConsumer<ResetPassCubit,ResetPassState>(
       listener: (context, state) {
-        if (state is GenerateOtpSuccess) {
-          GoRouter.of(context).push(AppRouter.verify,extra:{
-            'email': emailController.text,
-            'isRegister': isRegister,
-            'userId': state.generateOtp.userId
-          } );
-          snackBar(state.generateOtp.message, context, Colors.white);
-          GenerateOtpCubit(sl<AuthRepoImplementation>()).close();
+        if (state is ResetPassSuccess) {
+          GoRouter.of(context).go(AppRouter.login,);
+          snackBar(state.message, context, Colors.white);
+          ResetPassCubit(sl<AuthRepoImplementation>()).close();
         }
-        if (state is GenerateOtpFailure) {
+        if (state is ResetPassFailure) {
           snackBar(state.message, context, Colors.red);
         }
       },
@@ -44,24 +40,29 @@ class ForgetForm extends StatelessWidget {
                children: [
                  const SizedBoxApp(h: 0.06),
                  CustomAuthTextField(
-                   text: 'Email ID/Phone number',
+                   isPassword: true,
+                   text: 'Enter New Password',
                    icon: Icons.alternate_email_outlined,
                    controller: emailController,
                    validate: (p0) {
+                     RegExp regex = RegExp(
+                         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$&*~]).{6,}$');
                      if (p0!.isEmpty) {
-                       return "please enter your email";
+                       return "Please enter your password!";
+                     }else if (!regex.hasMatch(p0)) {
+                       return "Password Must be at least 6 characters and should contain at least one upper case , lower case ,Special character and one digit";
                      }
                      return null;
                    },
                  ),
                  const SizedBoxApp(h: 0.025),
-                 state is GenerateOtpLoading?const Center(
+                 state is ResetPassLoading?const Center(
                    child: CircularProgressIndicator(),
                  ):CustomRectangleButton(
                    text: 'Submit',
                    press: () {
                      if(formKey.currentState!.validate()){
-                       BlocProvider.of<GenerateOtpCubit>(context).generateOtp(email: emailController.text);
+                       BlocProvider.of<ResetPassCubit>(context).resetPassOtp(pass: emailController.text, data: parameters);
                      }
                    },
                  ),

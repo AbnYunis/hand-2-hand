@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hand2hand/core/utils/app_router.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 import 'package:hand2hand/features/home/presentation/manager/fetch_posts_cubit.dart';
 import 'package:hand2hand/features/home/presentation/manager/fetch_posts_state.dart';
@@ -61,13 +59,14 @@ class HomeViewBody extends StatelessWidget {
               if(state is FetchPostsSuccess){
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: state.postModel.posts.length,
+                  itemCount: state.postModel.posts!.length,
                   itemBuilder: (context, index) {
                     return RecommendedWidget(
                         index,postModel: state.postModel,); // Add 1 to start index from 1
                   },
                 );
               }else if(state is FetchPostsFailure){
+                print(state.message);
                 return Container(
                   height: 400,
                   width: double.infinity,

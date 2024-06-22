@@ -17,10 +17,11 @@ import 'package:otp_text_field/style.dart';
 
 class VerifyBody extends StatelessWidget {
   const VerifyBody({super.key, required this.parameters});
+
   final Map<String, dynamic> parameters;
+
   @override
   Widget build(BuildContext context) {
-    int? otp=BlocProvider.of<GenerateOtpCubit>(context).otp;
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -35,12 +36,13 @@ class VerifyBody extends StatelessWidget {
         Padding(
           padding:
               EdgeInsets.symmetric(horizontal: SizeApp(context).width * 0.06),
-          child: BlocConsumer<ConfirmEmailByOTPCubit,ConfirmEmailByOTPState>(
+          child: BlocConsumer<ConfirmEmailByOTPCubit, ConfirmEmailByOTPState>(
             listener: (context, state) {
               if (state is ConfirmEmailSuccess) {
-                GoRouter.of(context).go(AppRouter.login);
-                snackBar(state.verifyOtpModel.message, context,
-                    Colors.white);
+                parameters["isRegister"]
+                    ? GoRouter.of(context).go(AppRouter.login)
+                    : GoRouter.of(context).go(AppRouter.resetPass, extra:parameters);
+                snackBar(state.verifyOtpModel.message, context, Colors.white);
               }
               if (state is ConfirmEmailFailure) {
                 snackBar(state.errorMessage, context, Colors.red);
@@ -83,10 +85,11 @@ class VerifyBody extends StatelessWidget {
                     length: 6,
                     width: SizeApp(context).width * 0.8,
                     fieldWidth: SizeApp(context).width * 0.12,
-                    onChanged: (x) {otp=int.parse(x);},
+                    onChanged: (x) {},
                     textFieldAlignment: MainAxisAlignment.spaceBetween,
                     fieldStyle: FieldStyle.box,
                     onCompleted: (pin) {
+                      parameters['otp'] = pin;
                       BlocProvider.of<ConfirmEmailByOTPCubit>(context)
                           .verifyOtp(
                         id: parameters['userId'],
@@ -129,15 +132,17 @@ class VerifyBody extends StatelessWidget {
                             },
                           ),
                           const SizedBoxApp(h: 0.09),
-                          state is ConfirmEmailLoading?const Center(
-                            child: CircularProgressIndicator(),
-                          ): const CustomRectangleButton(text: 'Verify'),
+                          state is ConfirmEmailLoading
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : const CustomRectangleButton(text: 'Verify'),
                         ],
                       ),
                     ),
                   ),
                 ],
-              ); 
+              );
             },
           ),
         )
@@ -145,4 +150,3 @@ class VerifyBody extends StatelessWidget {
     );
   }
 }
-

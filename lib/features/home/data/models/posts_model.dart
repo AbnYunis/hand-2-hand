@@ -1,132 +1,145 @@
-
 class PostsModel {
-  String message;
-  List<Post> posts;
+  String? message;
+  List<Posts>? posts;
 
-  PostsModel({
-    required this.message,
-    required this.posts,
-  });
+  PostsModel({message, posts});
 
-  factory PostsModel.fromJson(Map<String, dynamic> json) => PostsModel(
-    message: json["message"],
-    posts: List<Post>.from(json["posts"].map((x) => Post.fromJson(x))),
-  );
+  PostsModel.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+    if (json['posts'] != null) {
+      posts = <Posts>[];
+      json['posts'].forEach((v) {
+        posts!.add(Posts.fromJson(v));
+      });
+    }
+  }
 
-  Map<String, dynamic> toJson() => {
-    "message": message,
-    "posts": List<dynamic>.from(posts.map((x) => x.toJson())),
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    if (posts != null) {
+      data['posts'] = posts!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-class Post {
-  Image image;
-  String id;
-  String title;
-  String desc;
-  CreatedBy createdBy;
-  String location;
-  List<dynamic> volunteers;
-  String customId;
-  DateTime createdAt;
-  DateTime updatedAt;
-  int v;
+class Posts {
+  Image? image;
+  String? sId;
+  String? title;
+  String? desc;
+  CreatedBy? createdBy;
+  String? location;
+  List<String>? volunteers;
+  String? customId;
+  String? createdAt;
+  String? updatedAt;
+  int? iV;
 
-  Post({
-    required this.image,
-    required this.id,
-    required this.title,
-    required this.desc,
-    required this.createdBy,
-    required this.location,
-    required this.volunteers,
-    required this.customId,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.v,
-  });
+  Posts(
+      {image,
+      sId,
+      title,
+      desc,
+      createdBy,
+      location,
+      volunteers,
+      customId,
+      createdAt,
+      updatedAt,
+      iV});
 
-  factory Post.fromJson(Map<String, dynamic> json) => Post(
-    image: Image.fromJson(json["image"]),
-    id: json["_id"],
-    title: json["title"],
-    desc: json["desc"],
-    createdBy: CreatedBy.fromJson(json["createdBy"]),
-    location: json["location"],
-    volunteers: List<dynamic>.from(json["volunteers"].map((x) => x)),
-    customId: json["customId"],
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
-    v: json["__v"],
-  );
+  Posts.fromJson(Map<String, dynamic> json) {
+    image = json['image'] != null
+        ? Image.fromJson(json['image'])
+        : Image.fromJson({
+            "secure_url":
+                "https://res.cloudinary.com/dijwhgmfh/image/upload/v1710202077/Charities/Charities/Posts/ANl_lLrKe2DzjGqOBRYXV/iysj6pmihhghojlcgw3l.png",
+            "public_id":
+                "Charities/Charities/Posts/ANl_lLrKe2DzjGqOBRYXV/iysj6pmihhghojlcgw3l"
+          });
+    sId = json['_id'];
+    title = json['title'];
+    desc = json['desc'];
+    createdBy = json['createdBy'] != null
+        ? CreatedBy.fromJson(json['createdBy'])
+        : null;
+    location = json['location'];
+    volunteers = json['volunteers'].cast<String>();
+    customId = json['customId'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    iV = json['__v'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "image": image.toJson(),
-    "_id": id,
-    "title": title,
-    "desc": desc,
-    "createdBy": createdBy.toJson(),
-    "location": location,
-    "volunteers": List<dynamic>.from(volunteers.map((x) => x)),
-    "customId": customId,
-    "createdAt": createdAt.toIso8601String(),
-    "updatedAt": updatedAt.toIso8601String(),
-    "__v": v,
-  };
-}
-
-class CreatedBy {
-  String id;
-  String charityName;
-  String email;
-  List<String> phones;
-  String status;
-  String createdById;
-
-  CreatedBy({
-    required this.id,
-    required this.charityName,
-    required this.email,
-    required this.phones,
-    required this.status,
-    required this.createdById,
-  });
-
-  factory CreatedBy.fromJson(Map<String, dynamic> json) => CreatedBy(
-    id: json["_id"],
-    charityName: json["charityName"],
-    email: json["email"],
-    phones: List<String>.from(json["phones"].map((x) => x)),
-    status: json["status"],
-    createdById: json["id"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "charityName": charityName,
-    "email": email,
-    "phones": List<dynamic>.from(phones.map((x) => x)),
-    "status": status,
-    "id": createdById,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (image != null) {
+      data['image'] = image!.toJson();
+    }
+    data['_id'] = sId;
+    data['title'] = title;
+    data['desc'] = desc;
+    if (createdBy != null) {
+      data['createdBy'] = createdBy!.toJson();
+    }
+    data['location'] = location;
+    data['volunteers'] = volunteers;
+    data['customId'] = customId;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = iV;
+    return data;
+  }
 }
 
 class Image {
-  String secureUrl;
-  String publicId;
+  String? secureUrl;
+  String? publicId;
 
-  Image({
-    required this.secureUrl,
-    required this.publicId,
-  });
+  Image({secureUrl, publicId});
 
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
-    secureUrl: json["secure_url"],
-    publicId: json["public_id"],
-  );
+  Image.fromJson(Map<String, dynamic> json) {
+    secureUrl = json['secure_url'];
+    publicId = json['public_id'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "secure_url": secureUrl,
-    "public_id": publicId,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['secure_url'] = secureUrl;
+    data['public_id'] = publicId;
+    return data;
+  }
+}
+
+class CreatedBy {
+  String? sId;
+  String? charityName;
+  String? email;
+  List<String>? phones;
+  String? status;
+  String? id;
+
+  CreatedBy({sId, charityName, email, phones, status, id});
+
+  CreatedBy.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    charityName = json['charityName'];
+    email = json['email'];
+    phones = json['phones'].cast<String>();
+    status = json['status'];
+    id = json['id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['charityName'] = charityName;
+    data['email'] = email;
+    data['phones'] = phones;
+    data['status'] = status;
+    data['id'] = id;
+    return data;
+  }
 }

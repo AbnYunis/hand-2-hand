@@ -20,14 +20,14 @@ class RecommendedSecondSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                posts.posts[index].title,
+                posts.posts![index].title!,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: w * .043,
                 ),
               ),
               Text(
-                posts.posts[index].desc,
+                posts.posts![index].desc!,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: w * .043,
@@ -44,7 +44,7 @@ class RecommendedSecondSection extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    posts.posts[index].createdBy.charityName,
+                    posts.posts![index].createdBy!.charityName!,
                     style: TextStyle(color: Colors.grey, fontSize: w * .04),
                   ),
                 ],

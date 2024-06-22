@@ -17,11 +17,10 @@ class RecommendedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final w = SizeApp(context).width;
-    final h = SizeApp(context).height;
     return GestureDetector(
       onTap: () {
         GoRouter.of(context)
-            .push(AppRouter.campaign, extra: postModel.posts[itemNumber].id);
+            .push(AppRouter.campaign, extra: postModel.posts![itemNumber].sId!);
       },
       child: Container(
         width: w * .7,
@@ -42,7 +41,7 @@ class RecommendedWidget extends StatelessWidget {
                 children: [
                   /// The first section in the recommendation widget
                   RecommendedFirstSection(
-                    image: postModel.posts[itemNumber].image.secureUrl,
+                    image: postModel.posts![itemNumber].image!.secureUrl!,
                   ),
 
                   /// The second section in the recommendation widget
