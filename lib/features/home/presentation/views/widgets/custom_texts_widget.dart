@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hand2hand/constants.dart';
 import 'package:hand2hand/core/utils/media_query.dart';
 
+import '../../../../../core/utils/shared_data.dart';
+
 class CustomTextsWidget extends StatelessWidget {
   const CustomTextsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    print(SharedData.getUserName());
     final w = SizeApp(context).width;
     final h = SizeApp(context).height;
     return Column(
@@ -19,7 +22,7 @@ class CustomTextsWidget extends StatelessWidget {
               style: TextStyle(fontSize: w * .06, fontWeight: FontWeight.bold),
             ),
             Text(
-              'Lenardo',
+              SharedData.getUserName()!,
               style: TextStyle(color: mainColor1, fontSize: w * .06),
             )
           ],

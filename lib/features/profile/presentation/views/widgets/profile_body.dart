@@ -17,7 +17,6 @@ class ProfileBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final w = SizeApp(context).width;
     final h = SizeApp(context).height;
-    print(SharedData.getToken());
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -25,26 +24,28 @@ class ProfileBody extends StatelessWidget {
           const SizedBoxApp(
             h: .1,
           ),
-          SharedData.getUserImage()!.isNotEmpty  ? CircleAvatar(
-            radius: w * .12,
-            backgroundImage: NetworkImage(SharedData.getUserImage()!),
-          ) : FutureBuilder<File>(
-            future: loadImageFromPrefs(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator(); // Placeholder widget while loading
-              } else if (snapshot.hasError) {
-                print(snapshot.error);
-                return Text('Error: ${snapshot.error}');
-              } else {
-                final image = snapshot.data!;
-                return CircleAvatar(
+          SharedData.getUserImage()!.isNotEmpty
+              ? CircleAvatar(
                   radius: w * .12,
-                  backgroundImage:FileImage(image) as ImageProvider,
-                );
-              }
-            },
-          ),
+                  backgroundImage: NetworkImage(SharedData.getUserImage()!),
+                )
+              : FutureBuilder<File>(
+                  future: loadImageFromPrefs(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator(); // Placeholder widget while loading
+                    } else if (snapshot.hasError) {
+                      print(snapshot.error);
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      final image = snapshot.data!;
+                      return CircleAvatar(
+                        radius: w * .12,
+                        backgroundImage: FileImage(image) as ImageProvider,
+                      );
+                    }
+                  },
+                ),
           const SizedBoxApp(
             h: .05,
           ),
