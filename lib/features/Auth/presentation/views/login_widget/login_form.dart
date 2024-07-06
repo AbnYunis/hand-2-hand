@@ -33,9 +33,8 @@ class LoginForm extends StatelessWidget {
           SharedData.saveUserName(userName: state.authModel.user.userName);
           SharedData.saveUserPhone(userPhone: state.authModel.user.phone);
           SharedData.saveIsLogin(isLogin: state.authModel.user.isLoggedIn);
-          if(SharedData.getLocalUserImage() == null){
-            SharedData.saveUserImage(userImage: state.authModel.user.profilePic!.secureUrl);
-          }
+          SharedData.saveUserImage(userImage: state.authModel.user.profilePic!.secureUrl);
+
 
           GoRouter.of(context).go(AppRouter.home);
           snackBar(state.authModel.message, context, Colors.white);

@@ -9,9 +9,9 @@ import 'package:hand2hand/core/utils/shared_data.dart';
 
 class PhotoWidget extends StatefulWidget {
   const PhotoWidget({
-    super.key,
+    super.key, required this.onImageSelected,
   });
-
+final void Function(File?) onImageSelected;
   @override
   State<PhotoWidget> createState() => _PhotoWidgetState();
 }
@@ -57,7 +57,9 @@ class _PhotoWidgetState extends State<PhotoWidget> {
                 final loadImage=await loadImageFromPrefs();
                 final loadedImage = File(loadImage.path);
                 setState(() {
+
                   imageFile = loadedImage;
+                  widget.onImageSelected(imageFile);
                 });
               },
               icon: Icon(

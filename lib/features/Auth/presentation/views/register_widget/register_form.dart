@@ -20,7 +20,7 @@ class RegisterForm extends StatelessWidget {
     required this.emailController,
     required this.passController,
     required this.rePassController,
-    required this.phoneController,
+    required this.phoneController, required this.image,
   });
 
   final GlobalKey<FormState> formKey;
@@ -29,6 +29,7 @@ class RegisterForm extends StatelessWidget {
   final TextEditingController passController;
   final TextEditingController rePassController;
   final TextEditingController phoneController;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -140,6 +141,7 @@ class RegisterForm extends StatelessWidget {
                           userName: nameController.text,
                           phone: phoneController.text,
                           rePassword: rePassController.text,
+                          image: image,
                         );
                       }
                     },

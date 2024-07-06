@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hand2hand/constants.dart';
 import 'package:hand2hand/core/widgets/clip_path.dart';
@@ -17,6 +19,7 @@ class RegisterBody extends StatelessWidget {
     TextEditingController passController = TextEditingController();
     TextEditingController rePassController = TextEditingController();
     TextEditingController phoneController = TextEditingController();
+    late File? image;
     return Stack(
       children: [
         ClipPath(
@@ -46,14 +49,16 @@ class RegisterBody extends StatelessWidget {
                 ),
               ),
               const SizedBoxApp(h: 0.01),
-              const PhotoWidget(),
+               PhotoWidget(onImageSelected: (p0) {
+                image = p0;
+              },),
               RegisterForm(
                   formKey: formKey,
                   nameController: nameController,
                   emailController: emailController,
                   passController: passController,
                   rePassController: rePassController,
-                  phoneController: phoneController),
+                  phoneController: phoneController,image: image!.path,),
             ],
           ),
         )

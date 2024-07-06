@@ -48,15 +48,22 @@ class AuthRepoImplementation extends AuthRepo {
     String rePassword,
     String phone,
     String userName,
+    String image,
   ) async {
     try {
-      final Map<String, dynamic> data = {
-        'email': email,
-        'password': password,
-        'userName': userName,
-        'repassword': rePassword,
-        'phone': phone
-      };
+      final data = FormData.fromMap(
+        {
+          'email': email,
+          'password': password,
+          'rePassword': rePassword,
+          'phone': phone,
+          'userName': userName,
+          'image': await MultipartFile.fromFile(
+            image,
+            filename: 'file.jpg',
+          ),
+        },
+      );
 
       final res =
           await apiService.postData(endPoint: 'auth/signup', data: data);
