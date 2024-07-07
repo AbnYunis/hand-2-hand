@@ -14,6 +14,7 @@ abstract class AuthRepo {
     String rePassword,
     String phone,
     String userName,
+    String image,
   );
 
   Future<Either<Failures, GenerateOtp>> generateOtp(String email);

@@ -11,7 +11,6 @@ import 'package:hand2hand/features/Auth/presentation/manager/auth_cubit/auth_cub
 import 'package:hand2hand/features/Auth/presentation/manager/auth_cubit/auth_state.dart';
 
 import '../../../../../core/utils/app_router.dart';
-import '../../../../../core/utils/shared_data.dart';
 
 class RegisterForm extends StatelessWidget {
   const RegisterForm({
@@ -21,7 +20,7 @@ class RegisterForm extends StatelessWidget {
     required this.emailController,
     required this.passController,
     required this.rePassController,
-    required this.phoneController,
+    required this.phoneController, required this.image,
   });
 
   final GlobalKey<FormState> formKey;
@@ -30,20 +29,20 @@ class RegisterForm extends StatelessWidget {
   final TextEditingController passController;
   final TextEditingController rePassController;
   final TextEditingController phoneController;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is AuthSuccess) {
-          SharedData.saveUserName(userName: nameController.text);
-          GoRouter.of(context).push(AppRouter.forgetPass, extra: true);
-          snackBar(state.authModel.message, context, Colors.white);
-          AuthCubit(sl<AuthRepoImplementation>()).close();
-        }
-        if (state is AuthFailure) {
-          snackBar(state.errMessage, context, Colors.red);
-        }
+          if (state is AuthSuccess) {
+    GoRouter.of(context).push(AppRouter.forgetPass,extra: true);
+    snackBar(state.authModel.message, context, Colors.white);
+    AuthCubit(sl<AuthRepoImplementation>()).close();
+          }
+          if (state is AuthFailure) {
+    snackBar(state.errMessage, context, Colors.red);
+          }
       },
       builder: (context, state) {
         return Form(
@@ -87,7 +86,8 @@ class RegisterForm extends StatelessWidget {
                           r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$&*~]).{6,}$');
                       if (p0!.isEmpty) {
                         return "Please enter your password!";
-                      } else if (rePassController.text != passController.text) {
+                      } else if (rePassController.text !=
+                          passController.text) {
                         return "Password does not match!";
                       } else if (!regex.hasMatch(p0)) {
                         return "Password Must be at least 6 characters and should contain at least one upper case , lower case ,Special character and one digit";
@@ -106,7 +106,8 @@ class RegisterForm extends StatelessWidget {
                           r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$&*~]).{6,}$');
                       if (p0!.isEmpty) {
                         return "Please enter your password!";
-                      } else if (rePassController.text != passController.text) {
+                      } else if (rePassController.text !=
+                          passController.text) {
                         return "Password does not match!";
                       } else if (!regex.hasMatch(p0)) {
                         return "Password Must be at least 6 characters and should contain at least one upper case , lower case ,Special character and one digit";
@@ -127,25 +128,24 @@ class RegisterForm extends StatelessWidget {
                     },
                   ),
                   const SizedBoxApp(h: 0.035),
-                  state is AuthLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : CustomRectangleButton(
-                          text: 'Sign up',
-                          press: () async {
-                            if (formKey.currentState!.validate()) {
-                              await BlocProvider.of<AuthCubit>(context)
-                                  .register(
-                                email: emailController.text,
-                                password: passController.text,
-                                userName: nameController.text,
-                                phone: phoneController.text,
-                                rePassword: rePassController.text,
-                              );
-                            }
-                          },
-                        ),
+                  state is AuthLoading?const Center(
+                    child: CircularProgressIndicator(),
+                  ):
+              CustomRectangleButton(
+                    text: 'Sign up',
+                    press: () async {
+                      if (formKey.currentState!.validate()) {
+                        await BlocProvider.of<AuthCubit>(context).register(
+                          email: emailController.text,
+                          password: passController.text,
+                          userName: nameController.text,
+                          phone: phoneController.text,
+                          rePassword: rePassController.text,
+                          image: image,
+                        );
+                      }
+                    },
+                  ),
                 ],
               ),
             ),

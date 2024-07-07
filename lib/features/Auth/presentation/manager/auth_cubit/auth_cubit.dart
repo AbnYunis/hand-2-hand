@@ -27,6 +27,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String rePassword,
     required String phone,
     required String userName,
+    required String image,
   }) async {
     emit(AuthLoading());
     final res = await authRepo.register(
@@ -34,7 +35,7 @@ class AuthCubit extends Cubit<AuthState> {
       password,
       rePassword,
       phone,
-      userName,
+      userName, image
     );
     res.fold((failure) {
       emit(AuthFailure(failure.errorMessage));
