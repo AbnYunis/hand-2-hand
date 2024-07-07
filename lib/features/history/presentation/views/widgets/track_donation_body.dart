@@ -27,6 +27,7 @@ class TrackDonationBody extends StatelessWidget {
             h: .03,
           ),
           HistoryItem(
+            press: false,
             donationItem: donationItem,
           ),
           const SizedBoxApp(

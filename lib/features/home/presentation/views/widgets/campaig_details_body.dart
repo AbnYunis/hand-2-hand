@@ -16,7 +16,9 @@ import 'description_widget.dart';
 
 class CampaignDetailsBody extends StatelessWidget {
   const CampaignDetailsBody({super.key, required this.id});
+
   final String id;
+
   @override
   Widget build(BuildContext context) {
     final w = SizeApp(context).width;
@@ -89,7 +91,7 @@ class CampaignDetailsBody extends StatelessWidget {
                       child: SizedBox(
                         height: 200,
                         child: FlutterMap(
-                          options: MapOptions(
+                          options: const MapOptions(
                             initialCenter: LatLng(29.95375640, 31.53700030),
                             initialZoom: 11,
                           ),
@@ -103,7 +105,7 @@ class CampaignDetailsBody extends StatelessWidget {
                               markers: [
                                 Marker(
                                     point: LatLng(29.95375640, 31.53700030),
-                                    child:Image.asset(AssetsService.location))
+                                    child: Image.asset(AssetsService.location))
                               ],
                             )
                           ],
@@ -116,12 +118,13 @@ class CampaignDetailsBody extends StatelessWidget {
                     CustomRoundedButton(
                         text: 'Volunteer',
                         onPressed: () {
-                          GoRouter.of(context).push(AppRouter.volunteer,extra: id);
+                          GoRouter.of(context)
+                              .push(AppRouter.volunteer, extra: id);
                         }),
                   ],
                 );
               } else {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }

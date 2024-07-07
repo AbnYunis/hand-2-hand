@@ -22,17 +22,26 @@ class ActivitiesGridViewItem extends StatelessWidget {
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(w * .02)),
+            borderRadius: BorderRadius.circular(w * .02),
+          ),
           shadows: const [
             BoxShadow(
               color: Color(0x1E000000),
               blurRadius: 12,
               offset: Offset(0, 4),
               spreadRadius: 0,
-            )
+            ),
           ],
         ),
-        child: Image.network(charity.profilePic),
+        child: Column(
+          children: [
+            Image.network(charity.profilePic),
+            const SizedBoxApp(
+              h: .01,
+            ),
+            Text(charity.charityName),
+          ],
+        ),
       ),
     );
   }

@@ -12,8 +12,10 @@ import 'package:hand2hand/features/history/data/repositories/history_repo_implem
 import 'package:hand2hand/features/history/presentation/manegers/cancel_donation/cancel_donation_cubit.dart';
 
 class HistoryItem extends StatelessWidget {
-  const HistoryItem({super.key, required this.donationItem});
+  const HistoryItem(
+      {super.key, required this.donationItem, required this.press});
 
+  final bool press;
   final DonationItem donationItem;
 
   @override
@@ -31,8 +33,12 @@ class HistoryItem extends StatelessWidget {
               status = 'canceled';
             }
             return InkWell(
-              onTap: () => GoRouter.of(context).push(AppRouter.trackDonation,
-                  extra: {'donationItem': donationItem, 'status': status}),
+              onTap: () {
+                if (press) {
+                  GoRouter.of(context).push(AppRouter.trackDonation,
+                      extra: {'donationItem': donationItem, 'status': status});
+                }
+              },
               child: Stack(
                 children: [
                   Container(
@@ -66,7 +72,8 @@ class HistoryItem extends StatelessWidget {
                               ),
                               Text(
                                 'Cate : ${donationItem.donationType}',
-                                style: const TextStyle(color: Color(0xffB2B2B4)),
+                                style:
+                                    const TextStyle(color: Color(0xffB2B2B4)),
                               )
                             ],
                           ),
@@ -80,11 +87,13 @@ class HistoryItem extends StatelessWidget {
                             children: [
                               Text(
                                 '${donationItem.createdAt.day}-${donationItem.createdAt.month}-${donationItem.createdAt.year}',
-                                style: const TextStyle(color: Color(0xffB2B2B4)),
+                                style:
+                                    const TextStyle(color: Color(0xffB2B2B4)),
                               ),
                               Text(
                                 '${donationItem.createdAt.hour > 12 ? donationItem.createdAt.hour - 12 : donationItem.createdAt.hour}:${donationItem.createdAt.minute.toString().padLeft(2, '0')} ${donationItem.createdAt.hour >= 12 ? 'Pm' : 'Am'}',
-                                style: const TextStyle(color: Color(0xffB2B2B4)),
+                                style:
+                                    const TextStyle(color: Color(0xffB2B2B4)),
                               ),
                               Container(
                                 height: h * .03,
@@ -108,7 +117,6 @@ class HistoryItem extends StatelessWidget {
                             ],
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -129,7 +137,7 @@ class HistoryItem extends StatelessWidget {
                                   value: 1, child: Text("cancel donation")),
                             ];
                           }, onSelected: (value) {
-                            if (status!='canceled') {
+                            if (status != 'canceled') {
                               BlocProvider.of<CancelDonationCubit>(context)
                                   .cancelDonation(donationItem.id);
                             }

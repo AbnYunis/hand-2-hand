@@ -36,6 +36,7 @@ class HistoryBody extends StatelessWidget {
                       itemBuilder: (context, index) {
 
                         return HistoryItem(
+                          press: true,
                           donationItem: donations[index],
                         );
                       });

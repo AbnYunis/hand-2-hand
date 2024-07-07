@@ -9,7 +9,6 @@ class CustomTextsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(SharedData.getUserName());
     final w = SizeApp(context).width;
     final h = SizeApp(context).height;
     return Column(

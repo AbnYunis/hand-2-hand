@@ -31,8 +31,6 @@ class HomeView extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-
-
             actions: [
               ///The icon of notification and the image
               Row(
@@ -45,26 +43,30 @@ class HomeView extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () => GoRouter.of(context).push(AppRouter.profile),
-                    child:SharedData.getUserImage()!.isNotEmpty  ? CircleAvatar(
-                      radius: w * .07,
-                      backgroundImage: NetworkImage(SharedData.getUserImage()!),
-                    ) : FutureBuilder<File>(
-                      future: loadImageFromPrefs(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const CircularProgressIndicator(); // Placeholder widget while loading
-                        } else if (snapshot.hasError) {
-                          print(snapshot.error);
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          final image = snapshot.data!;
-                          return CircleAvatar(
+                    child: SharedData.getUserImage()!.isNotEmpty
+                        ? CircleAvatar(
                             radius: w * .07,
-                            backgroundImage:FileImage(image) as ImageProvider,
-                          );
-                        }
-                      },
-                    ),
+                            backgroundImage:
+                                NetworkImage(SharedData.getUserImage()!),
+                          )
+                        : FutureBuilder<File>(
+                            future: loadImageFromPrefs(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator(); // Placeholder widget while loading
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                final image = snapshot.data!;
+                                return CircleAvatar(
+                                  radius: w * .07,
+                                  backgroundImage:
+                                      FileImage(image) as ImageProvider,
+                                );
+                              }
+                            },
+                          ),
                   ),
                   SizedBox(
                     width: w * .02,
